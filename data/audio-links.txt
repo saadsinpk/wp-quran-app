@@ -1,0 +1,114 @@
+1|https://www.alahazrat.info/alquran_mp3/surah-wise/001-Al Fatiha.mp3
+2|https://www.alahazrat.info/alquran_mp3/surah-wise/002-Baqarah.mp3
+3|https://www.alahazrat.info/alquran_mp3/surah-wise/003-Imran.mp3
+4|https://www.alahazrat.info/alquran_mp3/surah-wise/004-Al Nisa.mp3
+5|https://www.alahazrat.info/alquran_mp3/surah-wise/005-Maida.mp3
+6|https://www.alahazrat.info/alquran_mp3/surah-wise/006-Al Anaam.mp3
+7|https://www.alahazrat.info/alquran_mp3/surah-wise/007-Al Araaf.mp3
+8|https://www.alahazrat.info/alquran_mp3/surah-wise/008-Al Anfaal.mp3
+9|https://www.alahazrat.info/alquran_mp3/surah-wise/009-Al Touba.mp3
+10|https://www.alahazrat.info/alquran_mp3/surah-wise/010-Younus.mp3
+11|https://www.alahazrat.info/alquran_mp3/surah-wise/011-Hood.mp3
+12|https://www.alahazrat.info/alquran_mp3/surah-wise/012-Yousuf.mp3
+13|https://www.alahazrat.info/alquran_mp3/surah-wise/013-Al Raad.mp3
+14|https://www.alahazrat.info/alquran_mp3/surah-wise/014-Ibrahim.mp3
+15|https://www.alahazrat.info/alquran_mp3/surah-wise/015-Al Hijr.mp3
+16|https://www.alahazrat.info/alquran_mp3/surah-wise/016-Al Nahl.mp3
+17|https://www.alahazrat.info/alquran_mp3/surah-wise/017-Bani Israael.mp3
+18|https://www.alahazrat.info/alquran_mp3/surah-wise/018-Al Kahf.mp3
+19|https://www.alahazrat.info/alquran_mp3/surah-wise/019-Al Maryam.mp3
+20|https://www.alahazrat.info/alquran_mp3/surah-wise/020-Al Taha.mp3
+21|https://www.alahazrat.info/alquran_mp3/surah-wise/021-Al Anbia.mp3
+22|https://www.alahazrat.info/alquran_mp3/surah-wise/022-Al Hajj.mp3
+23|https://www.alahazrat.info/alquran_mp3/surah-wise/023-Al Mominoon.mp3
+24|https://www.alahazrat.info/alquran_mp3/surah-wise/024-Al Noor.mp3
+25|https://www.alahazrat.info/alquran_mp3/surah-wise/025-Al Furqan.mp3
+26|https://www.alahazrat.info/alquran_mp3/surah-wise/026-Al Shuara.mp3
+27|https://www.alahazrat.info/alquran_mp3/surah-wise/027-Al Namal.mp3
+28|https://www.alahazrat.info/alquran_mp3/surah-wise/028-Al Qasas.mp3
+29|https://www.alahazrat.info/alquran_mp3/surah-wise/029-Al Ankabut.mp3
+30|https://www.alahazrat.info/alquran_mp3/surah-wise/030-Al Rum.mp3
+31|https://www.alahazrat.info/alquran_mp3/surah-wise/031-Luqman.mp3
+32|https://www.alahazrat.info/alquran_mp3/surah-wise/032-Al Sajda.mp3
+33|https://www.alahazrat.info/alquran_mp3/surah-wise/033-Al Ahzab.mp3
+34|https://www.alahazrat.info/alquran_mp3/surah-wise/034-Saba.mp3
+35|https://www.alahazrat.info/alquran_mp3/surah-wise/035-Fatir.mp3
+36|https://www.alahazrat.info/alquran_mp3/surah-wise/036-Yaseen.mp3
+37|https://www.alahazrat.info/alquran_mp3/surah-wise/037-Al Saffat.mp3
+38|https://www.alahazrat.info/alquran_mp3/surah-wise/038-Al Suad.mp3
+39|https://www.alahazrat.info/alquran_mp3/surah-wise/039-Al Zumar.mp3
+40|https://www.alahazrat.info/alquran_mp3/surah-wise/040-Al Momin.mp3
+41|https://www.alahazrat.info/alquran_mp3/surah-wise/041-Ha Mim Sajdah.mp3
+42|https://www.alahazrat.info/alquran_mp3/surah-wise/042-Al Shura.mp3
+43|https://www.alahazrat.info/alquran_mp3/surah-wise/043-Al Zukhruf.mp3
+44|https://www.alahazrat.info/alquran_mp3/surah-wise/044-Al Dokhan.mp3
+45|https://www.alahazrat.info/alquran_mp3/surah-wise/045-Al Jathiah.mp3
+46|https://www.alahazrat.info/alquran_mp3/surah-wise/046-Al Ahquaf.mp3
+47|https://www.alahazrat.info/alquran_mp3/surah-wise/047-Muhammad.mp3
+48|https://www.alahazrat.info/alquran_mp3/surah-wise/048-Al Fatah.mp3
+49|https://www.alahazrat.info/alquran_mp3/surah-wise/049-Al Hujraat.mp3
+50|https://www.alahazrat.info/alquran_mp3/surah-wise/050-Qaf.mp3
+51|https://www.alahazrat.info/alquran_mp3/surah-wise/051-Al Zariat.mp3
+52|https://www.alahazrat.info/alquran_mp3/surah-wise/052-Al Tur.mp3
+53|https://www.alahazrat.info/alquran_mp3/surah-wise/053-Al Najm.mp3
+54|https://www.alahazrat.info/alquran_mp3/surah-wise/054-Al Qamar.mp3
+55|https://www.alahazrat.info/alquran_mp3/surah-wise/055-Al Rahman.mp3
+56|https://www.alahazrat.info/alquran_mp3/surah-wise/056-Al Waqiah.mp3
+57|https://www.alahazrat.info/alquran_mp3/surah-wise/057-Al Hadeed.mp3
+58|https://www.alahazrat.info/alquran_mp3/surah-wise/058-Al Mujadilah.mp3
+59|https://www.alahazrat.info/alquran_mp3/surah-wise/059-Al Hashr.mp3
+60|https://www.alahazrat.info/alquran_mp3/surah-wise/060-Al Mumtahinah.mp3
+61|https://www.alahazrat.info/alquran_mp3/surah-wise/061-Al Saff.mp3
+62|https://www.alahazrat.info/alquran_mp3/surah-wise/062-Al Jumah.mp3
+63|https://www.alahazrat.info/alquran_mp3/surah-wise/063-Al Munafiqoon.mp3
+64|https://www.alahazrat.info/alquran_mp3/surah-wise/064-Al Taghabun.mp3
+65|https://www.alahazrat.info/alquran_mp3/surah-wise/065-Al Talaq.mp3
+66|https://www.alahazrat.info/alquran_mp3/surah-wise/066-Al Tahrim.mp3
+67|https://www.alahazrat.info/alquran_mp3/surah-wise/067-Al Mulk.mp3
+68|https://www.alahazrat.info/alquran_mp3/surah-wise/068-Al Qalam.mp3
+69|https://www.alahazrat.info/alquran_mp3/surah-wise/069-Al Haqqah.mp3
+70|https://www.alahazrat.info/alquran_mp3/surah-wise/070-Al Maarij.mp3
+71|https://www.alahazrat.info/alquran_mp3/surah-wise/071-Nuh.mp3
+72|https://www.alahazrat.info/alquran_mp3/surah-wise/072-Al Jinn.mp3
+73|https://www.alahazrat.info/alquran_mp3/surah-wise/073-Al Mozammil.mp3
+74|https://www.alahazrat.info/alquran_mp3/surah-wise/074-Al Mudaththir.mp3
+75|https://www.alahazrat.info/alquran_mp3/surah-wise/075-Al Qiyamah.mp3
+76|https://www.alahazrat.info/alquran_mp3/surah-wise/076-Al Dahr.mp3
+77|https://www.alahazrat.info/alquran_mp3/surah-wise/077-Al Mursalat.mp3
+78|https://www.alahazrat.info/alquran_mp3/surah-wise/078-Al Naba.mp3
+79|https://www.alahazrat.info/alquran_mp3/surah-wise/079-Al Naziat.mp3
+80|https://www.alahazrat.info/alquran_mp3/surah-wise/080-Abasa.mp3
+81|https://www.alahazrat.info/alquran_mp3/surah-wise/081-Al Takwir.mp3
+82|https://www.alahazrat.info/alquran_mp3/surah-wise/082-Al Inftitar.mp3
+83|https://www.alahazrat.info/alquran_mp3/surah-wise/083-Al Mutafifeen.mp3
+84|https://www.alahazrat.info/alquran_mp3/surah-wise/084-Al Inshiqaq.mp3
+85|https://www.alahazrat.info/alquran_mp3/surah-wise/085-Al Buruj.mp3
+86|https://www.alahazrat.info/alquran_mp3/surah-wise/086-Al Tariq.mp3
+87|https://www.alahazrat.info/alquran_mp3/surah-wise/087-Al Ala.mp3
+88|https://www.alahazrat.info/alquran_mp3/surah-wise/088-Al Ghasiyah.mp3
+89|https://www.alahazrat.info/alquran_mp3/surah-wise/089-Al Fajr.mp3
+90|https://www.alahazrat.info/alquran_mp3/surah-wise/090-Al Balad.mp3
+91|https://www.alahazrat.info/alquran_mp3/surah-wise/091-Al Shams.mp3
+92|https://www.alahazrat.info/alquran_mp3/surah-wise/092-Al Lail.mp3
+93|https://www.alahazrat.info/alquran_mp3/surah-wise/093-Al Duha.mp3
+94|https://www.alahazrat.info/alquran_mp3/surah-wise/094-Al Inshirah.mp3
+95|https://www.alahazrat.info/alquran_mp3/surah-wise/095-Al Teen.mp3
+96|https://www.alahazrat.info/alquran_mp3/surah-wise/096-Al Alaq.mp3
+97|https://www.alahazrat.info/alquran_mp3/surah-wise/097-Al Qadr.mp3
+98|https://www.alahazrat.info/alquran_mp3/surah-wise/098-Al Bayyinah.mp3
+99|https://www.alahazrat.info/alquran_mp3/surah-wise/099-Al Zilzal.mp3
+100|https://www.alahazrat.info/alquran_mp3/surah-wise/100-Al Adiyat.mp3
+101|https://www.alahazrat.info/alquran_mp3/surah-wise/101-Al Qariah.mp3
+102|https://www.alahazrat.info/alquran_mp3/surah-wise/102-Al Takatur.mp3
+103|https://www.alahazrat.info/alquran_mp3/surah-wise/103-Al Asr.mp3
+104|https://www.alahazrat.info/alquran_mp3/surah-wise/104-Al Humazah.mp3
+105|https://www.alahazrat.info/alquran_mp3/surah-wise/105-Al Fil.mp3
+106|https://www.alahazrat.info/alquran_mp3/surah-wise/106-Al Quraish.mp3
+107|https://www.alahazrat.info/alquran_mp3/surah-wise/107-Al Maun.mp3
+108|https://www.alahazrat.info/alquran_mp3/surah-wise/108-Al Kausar.mp3
+109|https://www.alahazrat.info/alquran_mp3/surah-wise/109-Al Kafirun.mp3
+110|https://www.alahazrat.info/alquran_mp3/surah-wise/110-Al Nasar.mp3
+111|https://www.alahazrat.info/alquran_mp3/surah-wise/111-Al Lahab.mp3
+112|https://www.alahazrat.info/alquran_mp3/surah-wise/112-Al Ikhlas.mp3
+113|https://www.alahazrat.info/alquran_mp3/surah-wise/113-Al Falaq.mp3
+114|https://www.alahazrat.info/alquran_mp3/surah-wise/114-Al Naas.mp3
