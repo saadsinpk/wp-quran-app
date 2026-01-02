@@ -141,17 +141,6 @@ function display_quran_func() {
     if (!is_admin()) {
         initSuraData();
 
-        // Initialize session variables - Arabic only by default
-        if (!isset($_SESSION['urdu'])) {
-            $_SESSION['urdu'] = 0;
-        }
-        if (!isset($_SESSION['arabic'])) {
-            $_SESSION['arabic'] = 1;
-        }
-        if (!isset($_SESSION['english'])) {
-            $_SESSION['english'] = 0;
-        }
-
         // Get current sura
         $sura = isset($_GET['sura']) ? intval($_GET['sura']) : 1;
         if ($sura < 1) $sura = 1;
@@ -199,25 +188,25 @@ function display_quran_func() {
             </div>
         </div>';
 
-        // Toggle switches
+        // Toggle switches (state managed by JavaScript/localStorage)
         $html .= '<div class="toggle-container">
             <div class="toggle-wrapper">
                 <label class="toggle-switch">
-                    <input type="checkbox" class="arabic" ' . ($_SESSION['arabic'] == 1 ? 'checked' : '') . '>
+                    <input type="checkbox" class="arabic" checked>
                     <span class="toggle-slider"></span>
                 </label>
                 <span class="toggle-label">Arabic</span>
             </div>
             <div class="toggle-wrapper">
                 <label class="toggle-switch">
-                    <input type="checkbox" class="urdu" ' . ($_SESSION['urdu'] == 1 ? 'checked' : '') . '>
+                    <input type="checkbox" class="urdu">
                     <span class="toggle-slider"></span>
                 </label>
                 <span class="toggle-label">Urdu</span>
             </div>
             <div class="toggle-wrapper">
                 <label class="toggle-switch">
-                    <input type="checkbox" class="english" ' . ($_SESSION['english'] == 1 ? 'checked' : '') . '>
+                    <input type="checkbox" class="english">
                     <span class="toggle-slider"></span>
                 </label>
                 <span class="toggle-label">English</span>

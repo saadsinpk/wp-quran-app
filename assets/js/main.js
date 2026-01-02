@@ -20,16 +20,8 @@
         // Initialize font size
         initFontSize();
 
-        // Initialize visibility based on toggles
-        if (!$("input.arabic").is(":checked")) {
-            $(".aya .quran").hide();
-        }
-        if (!$("input.english").is(":checked")) {
-            $(".aya .englishtrans").hide();
-        }
-        if (!$("input.urdu").is(":checked")) {
-            $(".aya .trans").hide();
-        }
+        // Initialize language visibility from localStorage
+        initLanguageToggles();
 
         // Check for Arabic-only mode on load
         checkArabicOnlyMode();
@@ -179,47 +171,137 @@
         }
     }
 
-    // ============ Toggle Handlers ============
+    // ============ Language Toggle Functions ============
+    function initLanguageToggles() {
+        // Get saved preferences from localStorage (default: Arabic on, others off)
+        var showArabic = localStorage.getItem("quran_show_arabic") !== "false";
+        var showEnglish = localStorage.getItem("quran_show_english") === "true";
+        var showUrdu = localStorage.getItem("quran_show_urdu") === "true";
+
+        // Ensure at least one is selected (default to Arabic if none)
+        if (!showArabic && !showEnglish && !showUrdu) {
+            showArabic = true;
+            localStorage.setItem("quran_show_arabic", "true");
+        }
+
+        // Set checkbox states
+        $("input.arabic").prop("checked", showArabic);
+        $("input.english").prop("checked", showEnglish);
+        $("input.urdu").prop("checked", showUrdu);
+
+        // Remove arabic-only-mode class first (it uses !important)
+        $(".quran-container").removeClass("arabic-only-mode");
+
+        // Apply visibility using inline styles to override any CSS
+        if (showArabic) {
+            $(".aya .quran").css("display", "");
+        } else {
+            $(".aya .quran").css("display", "none");
+        }
+
+        if (showEnglish) {
+            $(".aya .englishtrans").css("display", "");
+        } else {
+            $(".aya .englishtrans").css("display", "none");
+        }
+
+        if (showUrdu) {
+            $(".aya .trans").css("display", "");
+        } else {
+            $(".aya .trans").css("display", "none");
+        }
+
+        // Now check if we should enable arabic-only mode
+        checkArabicOnlyMode();
+    }
+
+    // Helper function to check if at least one checkbox is selected
+    function getCheckedCount() {
+        var count = 0;
+        if ($("input.arabic").is(":checked")) count++;
+        if ($("input.english").is(":checked")) count++;
+        if ($("input.urdu").is(":checked")) count++;
+        return count;
+    }
+
+    // Prevent unchecking if it's the last one selected
+    function canUncheck() {
+        return getCheckedCount() > 1;
+    }
+
     $(document).on("change", ".arabic", function() {
-        $("body").append("<div class='loadingdiv'>Loading...</div>");
-        var data = { action: "update_arabic" };
-        $.post(ajaxurl, data, function(response) {
-            $(".loadingdiv").remove();
-            if (response == 2) {
-                $(".aya .quran").hide();
-            } else {
-                $(".aya .quran").show();
-            }
-            checkArabicOnlyMode();
-        });
+        var isChecked = $(this).is(":checked");
+
+        // If trying to uncheck and it's the last one, prevent it
+        if (!isChecked && getCheckedCount() < 1) {
+            $(this).prop("checked", true);
+            showToast("At least one language must be selected");
+            return;
+        }
+
+        // Remove arabic-only-mode first to allow changes
+        $(".quran-container").removeClass("arabic-only-mode");
+
+        // Save to localStorage and update UI immediately
+        localStorage.setItem("quran_show_arabic", isChecked ? "true" : "false");
+
+        if (isChecked) {
+            $(".aya .quran").css("display", "");
+        } else {
+            $(".aya .quran").css("display", "none");
+        }
+
+        checkArabicOnlyMode();
     });
 
     $(document).on("change", ".urdu", function() {
-        $("body").append("<div class='loadingdiv'>Loading...</div>");
-        var data = { action: "update_urdu" };
-        $.post(ajaxurl, data, function(response) {
-            $(".loadingdiv").remove();
-            if (response == 2) {
-                $(".aya .trans").hide();
-            } else {
-                $(".aya .trans").show();
-            }
-            checkArabicOnlyMode();
-        });
+        var isChecked = $(this).is(":checked");
+
+        // If trying to uncheck and it's the last one, prevent it
+        if (!isChecked && getCheckedCount() < 1) {
+            $(this).prop("checked", true);
+            showToast("At least one language must be selected");
+            return;
+        }
+
+        // Remove arabic-only-mode first to allow changes
+        $(".quran-container").removeClass("arabic-only-mode");
+
+        // Save to localStorage and update UI immediately
+        localStorage.setItem("quran_show_urdu", isChecked ? "true" : "false");
+
+        if (isChecked) {
+            $(".aya .trans").css("display", "");
+        } else {
+            $(".aya .trans").css("display", "none");
+        }
+
+        checkArabicOnlyMode();
     });
 
     $(document).on("change", ".english", function() {
-        $("body").append("<div class='loadingdiv'>Loading...</div>");
-        var data = { action: "update_english" };
-        $.post(ajaxurl, data, function(response) {
-            $(".loadingdiv").remove();
-            if (response == 2) {
-                $(".aya .englishtrans").hide();
-            } else {
-                $(".aya .englishtrans").show();
-            }
-            checkArabicOnlyMode();
-        });
+        var isChecked = $(this).is(":checked");
+
+        // If trying to uncheck and it's the last one, prevent it
+        if (!isChecked && getCheckedCount() < 1) {
+            $(this).prop("checked", true);
+            showToast("At least one language must be selected");
+            return;
+        }
+
+        // Remove arabic-only-mode first to allow changes
+        $(".quran-container").removeClass("arabic-only-mode");
+
+        // Save to localStorage and update UI immediately
+        localStorage.setItem("quran_show_english", isChecked ? "true" : "false");
+
+        if (isChecked) {
+            $(".aya .englishtrans").css("display", "");
+        } else {
+            $(".aya .englishtrans").css("display", "none");
+        }
+
+        checkArabicOnlyMode();
     });
 
     // ============ Navigation Functions ============
