@@ -31,6 +31,9 @@
             $(".aya .trans").hide();
         }
 
+        // Check for Arabic-only mode on load
+        checkArabicOnlyMode();
+
         // Initialize bookmarks
         initBookmarks();
 
@@ -163,6 +166,19 @@
         });
     }
 
+    // ============ Arabic-Only Mode (Mushaf Style) ============
+    function checkArabicOnlyMode() {
+        var arabicChecked = $("input.arabic").is(":checked");
+        var englishChecked = $("input.english").is(":checked");
+        var urduChecked = $("input.urdu").is(":checked");
+
+        if (arabicChecked && !englishChecked && !urduChecked) {
+            $(".quran-container").addClass("arabic-only-mode");
+        } else {
+            $(".quran-container").removeClass("arabic-only-mode");
+        }
+    }
+
     // ============ Toggle Handlers ============
     $(document).on("change", ".arabic", function() {
         $("body").append("<div class='loadingdiv'>Loading...</div>");
@@ -174,6 +190,7 @@
             } else {
                 $(".aya .quran").show();
             }
+            checkArabicOnlyMode();
         });
     });
 
@@ -187,6 +204,7 @@
             } else {
                 $(".aya .trans").show();
             }
+            checkArabicOnlyMode();
         });
     });
 
@@ -200,13 +218,19 @@
             } else {
                 $(".aya .englishtrans").show();
             }
+            checkArabicOnlyMode();
         });
     });
 
     // ============ Navigation Functions ============
-    function navigateToSura(sura) {
+    function navigateToSura(sura, aya) {
         var url = new URL(window.location.href);
         url.searchParams.set("sura", sura);
+        if (aya && aya > 1) {
+            url.hash = "aya-" + sura + "-" + aya;
+        } else {
+            url.hash = "";
+        }
         window.location.href = url.toString();
     }
 
@@ -215,7 +239,10 @@
     });
 
     $(document).on("change", "#juz-select", function() {
-        navigateToSura($(this).val());
+        var selected = $(this).find(":selected");
+        var sura = selected.data("sura");
+        var aya = selected.data("aya");
+        navigateToSura(sura, aya);
     });
 
     // ============ Search Functions ============
@@ -378,9 +405,10 @@
         var verseData = $("#aya-" + sura + "-" + aya + " .verse-data");
         var arabic = verseData.data("arabic");
         var english = verseData.data("english");
+        var urdu = verseData.data("urdu");
         var suraName = verseData.data("sura-name");
 
-        var text = arabic + "\n\n" + english + "\n\n- " + suraName + " " + sura + ":" + aya;
+        var text = arabic + "\n\n" + english + "\n\n" + urdu + "\n\n- " + suraName + " " + sura + ":" + aya;
 
         navigator.clipboard.writeText(text).then(function() {
             showToast("Verse copied to clipboard!");
@@ -412,7 +440,7 @@
     };
 
     window.shareToWhatsApp = function() {
-        var text = shareData.arabic + "%0A%0A" + shareData.english + "%0A%0A- " + shareData.suraName + " " + shareData.sura + ":" + shareData.aya;
+        var text = shareData.arabic + "\n\n" + shareData.english + "\n\n" + shareData.urdu + "\n\n- " + shareData.suraName + " " + shareData.sura + ":" + shareData.aya;
         window.open("https://wa.me/?text=" + encodeURIComponent(text), "_blank");
         closeShareModal();
     };
@@ -430,7 +458,7 @@
     };
 
     window.copyFromModal = function() {
-        var text = shareData.arabic + "\n\n" + shareData.english + "\n\n- " + shareData.suraName + " " + shareData.sura + ":" + shareData.aya;
+        var text = shareData.arabic + "\n\n" + shareData.english + "\n\n" + shareData.urdu + "\n\n- " + shareData.suraName + " " + shareData.sura + ":" + shareData.aya;
         navigator.clipboard.writeText(text);
         showToast("Verse copied!");
         closeShareModal();

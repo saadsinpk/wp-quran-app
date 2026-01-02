@@ -1163,6 +1163,48 @@ input:checked + .toggle-slider:before {
 
 .save-goal-btn:hover { opacity: 0.9; }
 
+/* ============ Arabic-Only Continuous Mode (Mushaf Style) ============ */
+.quran-container.arabic-only-mode .aya {
+    display: inline;
+    background: transparent;
+    border: none;
+}
+
+.quran-container.arabic-only-mode .aya-header,
+.quran-container.arabic-only-mode .englishtrans,
+.quran-container.arabic-only-mode .trans,
+.quran-container.arabic-only-mode .verse-data {
+    display: none !important;
+}
+
+.quran-container.arabic-only-mode .quran {
+    display: inline;
+    border: none;
+    margin: 0;
+    padding: 0 5px;
+    background: transparent;
+}
+
+.quran-container.arabic-only-mode .quran .ayaNum {
+    display: inline;
+    font-family: Muhammadi;
+    font-size: 0.8em;
+    color: var(--accent-color);
+    padding: 0 2px;
+}
+
+/* Container for continuous text */
+.arabic-continuous-wrapper {
+    direction: rtl;
+    text-align: justify;
+    line-height: 3.5rem;
+    padding: 20px;
+    background: var(--bg-aya);
+    border: 1px solid var(--border-color);
+    font-family: Muhammadi;
+    font-size: 2rem;
+}
+
 /* ============ Responsive ============ */
 @media (max-width: 600px) {
     .search-input { width: 100%; }

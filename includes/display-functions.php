@@ -141,15 +141,15 @@ function display_quran_func() {
     if (!is_admin()) {
         initSuraData();
 
-        // Initialize session variables
+        // Initialize session variables - Arabic only by default
         if (!isset($_SESSION['urdu'])) {
-            $_SESSION['urdu'] = 1;
+            $_SESSION['urdu'] = 0;
         }
         if (!isset($_SESSION['arabic'])) {
             $_SESSION['arabic'] = 1;
         }
         if (!isset($_SESSION['english'])) {
-            $_SESSION['english'] = 1;
+            $_SESSION['english'] = 0;
         }
 
         // Get current sura
