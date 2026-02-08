@@ -1164,6 +1164,12 @@ input:checked + .toggle-slider:before {
 .save-goal-btn:hover { opacity: 0.9; }
 
 /* ============ Arabic-Only Continuous Mode (Mushaf Style) ============ */
+/* RTL wrapper only for verse content - doesn't affect navigation */
+.quran-container.arabic-only-mode .sura-content-wrapper {
+    direction: rtl;
+    text-align: right;
+}
+
 .quran-container.arabic-only-mode .aya {
     display: inline;
     background: transparent;

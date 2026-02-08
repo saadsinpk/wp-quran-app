@@ -213,8 +213,10 @@ function display_quran_func() {
             </div>
         </div>';
 
-        // Display sura content
+        // Display sura content (wrapped for RTL in arabic-only mode)
+        $html .= '<div class="sura-content-wrapper">';
         $html .= showSura($sura);
+        $html .= '</div>';
 
         // Bottom navigation
         $html .= getNavigationButtons($sura);

@@ -215,41 +215,33 @@
         checkArabicOnlyMode();
     }
 
-    // Helper function to check if at least one checkbox is selected
-    function getCheckedCount() {
+    // Helper function to count OTHER checked checkboxes (excluding current)
+    function getOtherCheckedCount(excludeClass) {
         var count = 0;
-        if ($("input.arabic").is(":checked")) count++;
-        if ($("input.english").is(":checked")) count++;
-        if ($("input.urdu").is(":checked")) count++;
+        if (excludeClass !== "arabic" && $("input.arabic").is(":checked")) count++;
+        if (excludeClass !== "english" && $("input.english").is(":checked")) count++;
+        if (excludeClass !== "urdu" && $("input.urdu").is(":checked")) count++;
         return count;
-    }
-
-    // Prevent unchecking if it's the last one selected
-    function canUncheck() {
-        return getCheckedCount() > 1;
     }
 
     $(document).on("change", ".arabic", function() {
         var isChecked = $(this).is(":checked");
 
-        // If trying to uncheck and it's the last one, prevent it
-        if (!isChecked && getCheckedCount() < 1) {
+        // If trying to uncheck and no others are checked, prevent it
+        if (!isChecked && getOtherCheckedCount("arabic") === 0) {
             $(this).prop("checked", true);
             showToast("At least one language must be selected");
             return;
         }
 
+        // Save to localStorage
+        localStorage.setItem("quran_show_arabic", isChecked ? "true" : "false");
+
         // Remove arabic-only-mode first to allow changes
         $(".quran-container").removeClass("arabic-only-mode");
 
-        // Save to localStorage and update UI immediately
-        localStorage.setItem("quran_show_arabic", isChecked ? "true" : "false");
-
-        if (isChecked) {
-            $(".aya .quran").css("display", "");
-        } else {
-            $(".aya .quran").css("display", "none");
-        }
+        // Update visibility
+        $(".aya .quran").css("display", isChecked ? "" : "none");
 
         checkArabicOnlyMode();
     });
@@ -257,24 +249,21 @@
     $(document).on("change", ".urdu", function() {
         var isChecked = $(this).is(":checked");
 
-        // If trying to uncheck and it's the last one, prevent it
-        if (!isChecked && getCheckedCount() < 1) {
+        // If trying to uncheck and no others are checked, prevent it
+        if (!isChecked && getOtherCheckedCount("urdu") === 0) {
             $(this).prop("checked", true);
             showToast("At least one language must be selected");
             return;
         }
 
+        // Save to localStorage
+        localStorage.setItem("quran_show_urdu", isChecked ? "true" : "false");
+
         // Remove arabic-only-mode first to allow changes
         $(".quran-container").removeClass("arabic-only-mode");
 
-        // Save to localStorage and update UI immediately
-        localStorage.setItem("quran_show_urdu", isChecked ? "true" : "false");
-
-        if (isChecked) {
-            $(".aya .trans").css("display", "");
-        } else {
-            $(".aya .trans").css("display", "none");
-        }
+        // Update visibility
+        $(".aya .trans").css("display", isChecked ? "" : "none");
 
         checkArabicOnlyMode();
     });
@@ -282,24 +271,21 @@
     $(document).on("change", ".english", function() {
         var isChecked = $(this).is(":checked");
 
-        // If trying to uncheck and it's the last one, prevent it
-        if (!isChecked && getCheckedCount() < 1) {
+        // If trying to uncheck and no others are checked, prevent it
+        if (!isChecked && getOtherCheckedCount("english") === 0) {
             $(this).prop("checked", true);
             showToast("At least one language must be selected");
             return;
         }
 
+        // Save to localStorage
+        localStorage.setItem("quran_show_english", isChecked ? "true" : "false");
+
         // Remove arabic-only-mode first to allow changes
         $(".quran-container").removeClass("arabic-only-mode");
 
-        // Save to localStorage and update UI immediately
-        localStorage.setItem("quran_show_english", isChecked ? "true" : "false");
-
-        if (isChecked) {
-            $(".aya .englishtrans").css("display", "");
-        } else {
-            $(".aya .englishtrans").css("display", "none");
-        }
+        // Update visibility
+        $(".aya .englishtrans").css("display", isChecked ? "" : "none");
 
         checkArabicOnlyMode();
     });
