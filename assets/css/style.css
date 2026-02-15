@@ -42,6 +42,7 @@
 }
 
 /* ============ Base Styles ============ */
+
 .quran-container {
     background: var(--bg-primary);
     color: var(--text-primary);
@@ -71,7 +72,7 @@
     font-size: 2rem;
     direction: rtl;
     color: var(--text-primary);
-    line-height: 3rem;
+    line-height: normal;
     word-spacing: 0.2rem;
     margin-top: 5px;
     border-top: 2px solid var(--border-color);
@@ -84,12 +85,14 @@
     background-color: var(--bg-english);
     color: var(--text-primary);
     text-align: left !important;
+	line-height: normal;
+
 }
 
 .trans {
     font-family: mehr nastaliq;
     font-size: 1.5rem;
-    line-height: 3rem;
+    line-height: normal;
     word-spacing: 0.2rem;
     direction: rtl;
     background-color: var(--bg-urdu);
@@ -103,18 +106,50 @@
 
 .ayaNum {
     color: var(--text-primary);
-    font-size: 1.5rem;
     font-family: Calibri;
 }
 
-.audio {
+/* Full width wrapper with background */
+.audio-wrapper {
     position: fixed;
-    top: 7vh;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #ffffff;
+    box-shadow: 0 -3px 12px rgba(0,0,0,0.1);
+    padding: 12px 0;
     z-index: 1000;
-    border-radius: 11px;
-    width: 85vw;
-    height: 15vh;
-    text-align: center;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.audio {
+	top: 80vh;
+    width: 50%;
+    max-width: 600px;
+    border-radius: 12px 12px 0 0;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+	 background: transparent;
+}
+
+
+/* Audio controls */
+.audio audio {
+    width: 100%;
+    outline: none;
+    background: transparent; 
+    border-radius: 5px;      
+    display: block;           
+}
+
+.audio audio:hover {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
 }
 
 .sign {
@@ -186,22 +221,44 @@
 
 /* ============ Settings Bar (Dark Mode, Font Size) ============ */
 .settings-bar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    padding: 12px 15px;
-    background: var(--bg-secondary);
-    border-radius: 10px;
-    margin-bottom: 10px;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 8px var(--shadow-color);
+    position: static;          /* absolute + inset hata diya */
+    pointer-events: none;      /* clicks sirf children pe */
 }
 
-.settings-group {
+.settings-bar .settings-group:first-child {
+    position: fixed;
+    bottom: 18px;
+    left: 30px;
+
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
+
+    padding: 8px 16px;
+    background: var(--bg-secondary);
+    border-radius: 30px;
+    box-shadow: 0 2px 8px var(--shadow-color);
+
+    z-index: 1001;
+    pointer-events: auto;
+}
+
+.settings-bar .settings-group:last-child {
+    position: fixed;
+    bottom: 18px;
+    right: 30px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 8px 16px;
+    background: var(--bg-secondary);
+    border-radius: 30px;
+    box-shadow: 0 2px 8px var(--shadow-color);
+
+    z-index: 1001;
+    pointer-events: auto;
 }
 
 .settings-label {
@@ -210,6 +267,13 @@
     font-weight: 600;
     color: var(--text-secondary);
 }
+
+.font-size-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 
 /* Dark Mode Toggle */
 .dark-mode-toggle {
@@ -360,6 +424,10 @@
     background: var(--accent-dark);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(112, 73, 186, 0.4);
+}
+
+.nav-btn:hover span{
+	color: #ffff;
 }
 
 .nav-btn svg {
@@ -1174,6 +1242,7 @@ input:checked + .toggle-slider:before {
     display: inline;
     background: transparent;
     border: none;
+	color: black;
 }
 
 .quran-container.arabic-only-mode .aya-header,
@@ -1184,19 +1253,17 @@ input:checked + .toggle-slider:before {
 }
 
 .quran-container.arabic-only-mode .quran {
-    display: inline;
     border: none;
     margin: 0;
     padding: 0 5px;
     background: transparent;
-}
-
-.quran-container.arabic-only-mode .quran .ayaNum {
     display: inline;
     font-family: Muhammadi;
-    font-size: 0.8em;
-    color: var(--accent-color);
-    padding: 0 2px;
+    color: var(--text-primary);
+/* 	align-items: center; */
+    direction: rtl;
+	white-space: normal;
+
 }
 
 /* Container for continuous text */
@@ -1209,6 +1276,27 @@ input:checked + .toggle-slider:before {
     border: 1px solid var(--border-color);
     font-family: Muhammadi;
     font-size: 2rem;
+    text-justify: inter-word;
+    word-spacing: 2px;
+	unicode-bidi: isolate;
+	letter-spacing: 0.02em;
+	word-spacing: 0.15em;
+}
+.quran-container.arabic-only-mode .ayaText,
+.quran-container.arabic-only-mode .ayaNum {
+    display: inline;
+}
+/* .arabic-continuous-wrapper::after {
+    content: "";
+    display: inline-block;
+    width: 100%;
+} */
+
+.audio-wrapper,
+.audio-wrapper .settings-bar,
+.audio-wrapper .audio {
+    direction: ltr;
+    text-align: left;
 }
 
 /* ============ Responsive ============ */
@@ -1220,4 +1308,61 @@ input:checked + .toggle-slider:before {
     .nav-btn { padding: 10px; }
     .aya-actions { flex-wrap: wrap; }
     .image-modal-content { padding: 15px; }
+}
+
+.w-toplink{
+	margin-bottom: 18vh;
+}
+
+@media (max-width: 900px) {
+
+    #dark-mode-text, #font-size-display, .settings-label{
+        display: none;
+    }
+
+    .dark-mode-toggle {
+        padding: 8px;
+        justify-content: center;
+    }
+
+    #dark-mode-icon {
+        font-size: 18px;
+    }
+}
+
+/* @media (max-width: 600px) {
+    .settings-bar .settings-group:first-child {
+        padding: 8px;
+        border-radius: 50%;
+    }
+} */
+
+@media (max-width: 500px) {
+
+    .font-size-controls {
+        flex-direction: column;   
+        gap: 6px;
+    }
+
+    .font-btn {
+        width: 25px;
+        height: 25px;
+        padding: 0;
+    }
+
+    #font-size-display {
+        font-size: 12px;
+    }
+	
+	.settings-bar .settings-group:last-child {
+        padding: 6px 8px;
+/* 		right: 25px; */
+    }
+}
+
+@media screen and (max-width: 600px){
+	 .w-header-show,.w-toplink {
+        margin:10px;
+		margin-bottom: 18vh !important;
+    }
 }

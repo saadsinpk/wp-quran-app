@@ -25,7 +25,7 @@ if (!defined('ABSPATH')) {
 </div>
 
 <!-- Settings Bar (Dark Mode, Font Size) -->
-<div class="settings-bar">
+<!-- <div class="settings-bar">
     <div class="settings-group">
         <div class="dark-mode-toggle" onclick="toggleDarkMode()">
             <span id="dark-mode-icon">
@@ -42,7 +42,7 @@ if (!defined('ABSPATH')) {
             <button class="font-btn" onclick="changeFontSize(1)">+</button>
         </div>
     </div>
-</div>
+</div> -->
 
 <!-- Search and Bookmarks bar -->
 <div class="search-container">

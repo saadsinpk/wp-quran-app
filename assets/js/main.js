@@ -159,17 +159,48 @@
     }
 
     // ============ Arabic-Only Mode (Mushaf Style) ============
-    function checkArabicOnlyMode() {
-        var arabicChecked = $("input.arabic").is(":checked");
-        var englishChecked = $("input.english").is(":checked");
-        var urduChecked = $("input.urdu").is(":checked");
+//     function checkArabicOnlyMode() {
+//         var arabicChecked = $("input.arabic").is(":checked");
+//         var englishChecked = $("input.english").is(":checked");
+//         var urduChecked = $("input.urdu").is(":checked");
 
-        if (arabicChecked && !englishChecked && !urduChecked) {
-            $(".quran-container").addClass("arabic-only-mode");
-        } else {
-            $(".quran-container").removeClass("arabic-only-mode");
-        }
-    }
+//         if (arabicChecked && !englishChecked && !urduChecked) {
+//             $(".quran-container").addClass("arabic-only-mode");
+//         } else {
+//             $(".quran-container").removeClass("arabic-only-mode");
+//         }
+//     }
+	function checkArabicOnlyMode() {
+		let arabicChecked = $("input.arabic").is(":checked");
+		let englishChecked = $("input.english").is(":checked");
+		let urduChecked = $("input.urdu").is(":checked");
+
+		if (arabicChecked && !englishChecked && !urduChecked) {
+			$(".quran-container").addClass("arabic-only-mode");
+
+			// 🔥 Swap: ayaNum after ayaText
+			$(".quran").each(function () {
+				let ayaNum = $(this).find(".ayaNum");
+				let ayaText = $(this).find(".ayaText");
+
+				// Move ayaNum after ayaText unconditionally
+				ayaText.after(ayaNum);
+			});
+
+		} else {
+			$(".quran-container").removeClass("arabic-only-mode");
+
+			// 🔄 Revert: ayaNum always before ayaText
+			$(".quran").each(function () {
+				let ayaNum = $(this).find(".ayaNum");
+				let ayaText = $(this).find(".ayaText");
+
+				// Move ayaNum before ayaText unconditionally
+				ayaNum.insertBefore(ayaText);
+			});
+		}
+	}
+
 
     // ============ Language Toggle Functions ============
     function initLanguageToggles() {
@@ -582,6 +613,7 @@
             aya: aya,
             arabic: verseData.data("arabic"),
             english: verseData.data("english"),
+			urdu: verseData.data("urdu"),
             suraName: verseData.data("sura-name")
         };
         $("#image-modal").addClass("active");
@@ -625,15 +657,23 @@
         // Draw Arabic text
         ctx.fillStyle = t.text;
         ctx.textAlign = "center";
-        ctx.font = "bold 36px Muhammadi, Arial";
+        ctx.font = " 36px Muhammadi, Arial";
         var arabicText = imageData.arabic || "";
-        wrapText(ctx, arabicText, canvas.width / 2, 150, canvas.width - 100, 50);
+        wrapText(ctx, arabicText, canvas.width / 2, 100, canvas.width - 100, 50);
 
         // Draw English translation
         ctx.font = "italic 22px Calibri, Arial";
         var englishText = imageData.english || "";
         if (englishText.length > 200) englishText = englishText.substring(0, 200) + "...";
-        wrapText(ctx, englishText, canvas.width / 2, 350, canvas.width - 100, 32);
+        wrapText(ctx, englishText, canvas.width / 2, 320, canvas.width - 100, 32);
+		
+		// Draw Urdu translation
+		ctx.font = " 22px Jameel Noori Nastaleeq, Arial"; // Urdu ke liye appropriate font
+		ctx.fillStyle = t.text; // ya agar alag color chahiye to set karo
+		ctx.textAlign = "center";
+		var urduText = imageData.urdu || "";
+		if (urduText.length > 200) urduText = urduText.substring(0, 200) + "..."; // truncate agar lambi ho
+		wrapText(ctx, urduText, canvas.width / 2, 450, canvas.width - 100, 32); 
 
         // Draw reference
         ctx.font = "bold 24px Calibri, Arial";
@@ -650,7 +690,7 @@
         // Draw website
         ctx.font = "14px Calibri, Arial";
         ctx.fillStyle = "rgba(255,255,255,0.7)";
-        ctx.fillText("Quran Simple", canvas.width / 2, 580);
+        ctx.fillText("Al-Quran Simple  -  Alahazrat.net", canvas.width / 2, 580);
     }
 
     function wrapText(ctx, text, x, y, maxWidth, lineHeight) {

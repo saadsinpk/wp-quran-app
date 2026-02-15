@@ -47,16 +47,6 @@ function showSura($sura) {
     $html = '';
 
     // Audio player
-    $html .= "<div class='audio'>";
-    if (!empty($audioUrl)) {
-        $html .= "<audio controls>";
-        $html .= "<source src='$audioUrl' type='audio/mp3'>";
-        $html .= "Your browser does not support the audio element.";
-        $html .= "</audio>";
-    } else {
-        $html .= "Audio file not available.";
-    }
-    $html .= "</div>";
 
     // Sura name header
     $html .= "<div class='suraName'>سورة $suraName</div>";
@@ -67,8 +57,10 @@ function showSura($sura) {
         $transurdu = $transTextUrdu[$ayaNum - 1];
         $transArr = explode("|", $trans);
         $transurduArr = explode("|", $transurdu);
-        $transDisplay = '<span class="ayaNum">' . $transArr[1] . '. </span>' . $transArr[2];
-        $transurduDisplay = '<span class="ayaNum">' . $transurduArr[1] . '. </span>' . $transurduArr[2];
+        $transDisplay = '<span class="ayaNum"> (' . $transArr[1] . ') </span>' . $transArr[2] ;
+// 		$transDisplay = $transArr[2] .'<span class="ayaNum"> (' . $transArr[1] . ') </span>' ; ayanum end me
+        $transurduDisplay = '<span class="ayaNum"> (' . $transurduArr[1] . ') </span>' . $transurduArr[2];
+//      $transurduDisplay = $transurduArr[2] .'<span class="ayaNum"> (' . $transurduArr[1] . ') </span>' ;
 
         // Store clean text for copy/share
         $arabicClean = trim($aya);
@@ -121,13 +113,50 @@ function showSura($sura) {
 
         $html .= "<div class='aya' id='aya-{$sura}-{$ayaNum}'>";
         $html .= $verseData;
-        $html .= "<div class='aya-header'><span class='aya-ref'>{$sura}:{$ayaNum}</span>{$actionBtns}</div>";
-        $html .= "<div class='quran'><span class='ayaNum'>$ayaNum. </span>$aya</div>";
+//         $html .= "<div class='aya-header'><span class='aya-ref'>{$sura}:{$ayaNum}</span>{$actionBtns}</div>";
+        $html .= "<div class='quran'><span class='ayaNum'>($ayaNum) </span><span class='ayaText'>$aya</span></div>";
         $html .= "<div class='englishtrans'>$transDisplay</div>";
         $html .= "<div class='trans'>$transurduDisplay</div>";
+		$html .= "<div class='aya-header'><span class='aya-ref'>{$sura}:{$ayaNum}</span>{$actionBtns}</div>";
         $html .= "</div>";
         $ayaNum++;
     }
+		// Audio player
+		$html .= "<div class='audio-wrapper'>"; // wrapper start
+
+		// settings bar yahin dal do
+		$html .= "
+		<div class='settings-bar'>
+			<div class='settings-group'>
+				<div class='dark-mode-toggle' onclick='toggleDarkMode()'>
+					<span id='dark-mode-icon'>🌙</span>
+					<span id='dark-mode-text'>Dark Mode</span>
+				</div>
+			</div>
+
+			<div class='settings-group'>
+				<span class='settings-label'>Font Size:</span>
+				<div class='font-size-controls'>
+					<button class='font-btn' onclick='changeFontSize(-1)'>-</button>
+					<span id='font-size-display'>100%</span>
+					<button class='font-btn' onclick='changeFontSize(1)'>+</button>
+				</div>
+			</div>
+		</div>
+		";
+
+		$html .= "<div class='audio'>";
+		if (!empty($audioUrl)) {
+			$html .= "<audio controls>";
+			$html .= "<source src='$audioUrl' type='audio/mp3'>";
+			$html .= "Your browser does not support the audio element.";
+			$html .= "</audio>";
+		} else {
+			$html .= "Audio file not available.";
+		}
+		$html .= "</div>";
+
+	$html .= "</div>"; // wrapper end
 
     return $html;
 }
