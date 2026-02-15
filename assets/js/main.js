@@ -74,34 +74,30 @@
     }
 
     // ============ Font Size Functions ============
-    var fontSizes = { arabic: 2, english: 1.4, urdu: 1.5 };
+    var fontSize = 1.5;
 
     function initFontSize() {
-        var saved = localStorage.getItem("quran_font_sizes");
+        var saved = localStorage.getItem("quran_font_size");
         if (saved) {
-            fontSizes = JSON.parse(saved);
+            fontSize = parseFloat(saved);
             applyFontSizes();
         }
         updateFontDisplay();
     }
 
     window.changeFontSize = function(delta) {
-        fontSizes.arabic = Math.max(1, Math.min(4, fontSizes.arabic + delta * 0.2));
-        fontSizes.english = Math.max(0.8, Math.min(3, fontSizes.english + delta * 0.2));
-        fontSizes.urdu = Math.max(0.8, Math.min(3, fontSizes.urdu + delta * 0.2));
+        fontSize = Math.max(0.8, Math.min(4, fontSize + delta * 0.2));
         applyFontSizes();
-        localStorage.setItem("quran_font_sizes", JSON.stringify(fontSizes));
+        localStorage.setItem("quran_font_size", fontSize);
         updateFontDisplay();
     };
 
     function applyFontSizes() {
-        $(".quran").css("font-size", fontSizes.arabic + "rem");
-        $(".englishtrans").css("font-size", fontSizes.english + "rem");
-        $(".trans").css("font-size", fontSizes.urdu + "rem");
+        $(".quran, .englishtrans, .trans").css("font-size", fontSize + "rem");
     }
 
     function updateFontDisplay() {
-        $("#font-size-display").text(Math.round(fontSizes.arabic * 50) + "%");
+        $("#font-size-display").text(Math.round(fontSize / 1.5 * 100) + "%");
     }
 
     // ============ Last Read Functions ============
