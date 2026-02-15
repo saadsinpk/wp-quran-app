@@ -87,6 +87,26 @@ function strip_arabic_diacritics($text) {
 }
 
 /**
+ * Normalize Arabic/Urdu character variants so search works across both scripts
+ */
+function normalize_arabic_chars($text) {
+    $text = strip_arabic_diacritics($text);
+    $map = array(
+        "\xDB\x8C" => "\xD9\x8A", // ی (Urdu yeh U+06CC) -> ي (Arabic yeh U+064A)
+        "\xDB\x92" => "\xD9\x8A", // ے (Urdu bari yeh U+06D2) -> ي
+        "\xDA\xA9" => "\xD9\x83", // ک (Urdu kaf U+06A9) -> ك (Arabic kaf U+0643)
+        "\xDB\x81" => "\xD9\x87", // ہ (Urdu heh U+06C1) -> ه (Arabic heh U+0647)
+        "\xDB\x83" => "\xD9\x87", // ۃ (Urdu teh marbuta U+06C3) -> ه
+        "\xD8\xA9" => "\xD9\x87", // ة (Arabic teh marbuta U+0629) -> ه
+        "\xD8\xA3" => "\xD8\xA7", // أ (Alef with hamza above U+0623) -> ا (Alef U+0627)
+        "\xD8\xA5" => "\xD8\xA7", // إ (Alef with hamza below U+0625) -> ا
+        "\xD8\xA2" => "\xD8\xA7", // آ (Alef with madda U+0622) -> ا
+        "\xD9\x89" => "\xD9\x8A", // ى (Alef maksura U+0649) -> ي
+    );
+    return str_replace(array_keys($map), array_values($map), $text);
+}
+
+/**
  * Search Quran AJAX handler
  */
 function search_quran() {
@@ -121,15 +141,15 @@ function search_quran() {
     $results = array();
     $maxResults = 50;
 
-    // Strip diacritics from query for Arabic/Urdu matching
-    $queryClean = strip_arabic_diacritics($query);
+    // Normalize query for Arabic/Urdu matching (strips diacritics + normalizes character variants)
+    $queryClean = normalize_arabic_chars($query);
 
     // Search Arabic
     $arabicText = file($quranFile);
     $lineNum = 0;
     foreach ($arabicText as $line) {
         if (count($results) >= $maxResults) break;
-        $lineClean = strip_arabic_diacritics($line);
+        $lineClean = normalize_arabic_chars($line);
         if (mb_stripos($lineClean, $queryClean) !== false) {
             // Find which sura this belongs to
             $currentSura = 1;
@@ -175,7 +195,7 @@ function search_quran() {
     foreach ($urduText as $line) {
         if (count($results) >= $maxResults) break;
         $parts = explode("|", $line);
-        if (count($parts) >= 3 && mb_stripos(strip_arabic_diacritics($parts[2]), $queryClean) !== false) {
+        if (count($parts) >= 3 && mb_stripos(normalize_arabic_chars($parts[2]), $queryClean) !== false) {
             $sura = intval($parts[0]);
             $aya = intval($parts[1]);
             $results[] = array(
