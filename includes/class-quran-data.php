@@ -130,6 +130,54 @@ function getCurrentJuz($sura) {
 }
 
 /**
+ * Get all paras (juz) that a sura spans
+ *
+ * @param int $sura Sura number
+ * @return string e.g. "1", "1-3", "29-30"
+ */
+function getSuraParas($sura) {
+    global $juzData, $suraData;
+
+    if (empty($juzData) || empty($suraData)) {
+        return '1';
+    }
+
+    $suraStart = intval($suraData[$sura]['start']);
+    $suraEnd = $suraStart + intval($suraData[$sura]['ayas']) - 1;
+
+    $firstPara = 1;
+    $lastPara = 1;
+
+    // Find first para: which juz contains the first aya of this sura
+    for ($i = 30; $i >= 1; $i--) {
+        $juzStartLine = 0;
+        $juzSura = intval($juzData[$i]['sura']);
+        $juzAya = intval($juzData[$i]['aya']);
+        $juzStartLine = intval($suraData[$juzSura]['start']) + $juzAya - 1;
+        if ($suraStart >= $juzStartLine) {
+            $firstPara = $i;
+            break;
+        }
+    }
+
+    // Find last para: which juz contains the last aya of this sura
+    for ($i = 30; $i >= 1; $i--) {
+        $juzSura = intval($juzData[$i]['sura']);
+        $juzAya = intval($juzData[$i]['aya']);
+        $juzStartLine = intval($suraData[$juzSura]['start']) + $juzAya - 1;
+        if ($suraEnd >= $juzStartLine) {
+            $lastPara = $i;
+            break;
+        }
+    }
+
+    if ($firstPara == $lastPara) {
+        return (string) $firstPara;
+    }
+    return $firstPara . '-' . $lastPara;
+}
+
+/**
  * Get sura contents from file
  *
  * @param int $sura Sura number

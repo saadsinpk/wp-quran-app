@@ -57,6 +57,36 @@ add_action('wp_ajax_update_urdu', 'update_urdu');
 add_action('wp_ajax_nopriv_update_urdu', 'update_urdu');
 
 /**
+ * Strip Arabic diacritics (harakat) from text for searching
+ */
+function strip_arabic_diacritics($text) {
+    // Arabic diacritics: Fathah, Dammah, Kasrah, Sukun, Shadda, Tanwin (Fathatan, Dammatan, Kasratan), Maddah, Hamza above/below, Superscript Alef, etc.
+    $diacritics = array(
+        "\xD9\x8E", // Fathah َ
+        "\xD9\x8F", // Dammah ُ
+        "\xD9\x90", // Kasrah ِ
+        "\xD9\x91", // Shadda ّ
+        "\xD9\x92", // Sukun ْ
+        "\xD9\x8B", // Tanwin Fathatan ً
+        "\xD9\x8C", // Tanwin Dammatan ٌ
+        "\xD9\x8D", // Tanwin Kasratan ٍ
+        "\xD9\x93", // Maddah ٓ
+        "\xD9\x94", // Hamza above ٔ
+        "\xD9\x95", // Hamza below ٕ
+        "\xD9\xB0", // Superscript Alef ٰ
+        "\xD8\x90", // Tatweel ـ
+        "\xDB\x96", // Small high Seen ۖ
+        "\xDB\x97", // Small high rounded zero ۗ
+        "\xDB\x98", // Small high Meem ۘ
+        "\xDB\x99", // Small high Lam Alef ۙ
+        "\xDB\x9A", // Small high Jeem ۚ
+        "\xDB\x9B", // Small high three dots ۛ
+        "\xDB\x9C", // Small high Seen (2) ۜ
+    );
+    return str_replace($diacritics, '', $text);
+}
+
+/**
  * Search Quran AJAX handler
  */
 function search_quran() {
@@ -91,12 +121,16 @@ function search_quran() {
     $results = array();
     $maxResults = 50;
 
+    // Strip diacritics from query for Arabic/Urdu matching
+    $queryClean = strip_arabic_diacritics($query);
+
     // Search Arabic
     $arabicText = file($quranFile);
     $lineNum = 0;
     foreach ($arabicText as $line) {
         if (count($results) >= $maxResults) break;
-        if (mb_stripos($line, $query) !== false) {
+        $lineClean = strip_arabic_diacritics($line);
+        if (mb_stripos($lineClean, $queryClean) !== false) {
             // Find which sura this belongs to
             $currentSura = 1;
             $ayaInSura = $lineNum + 1;
@@ -141,7 +175,7 @@ function search_quran() {
     foreach ($urduText as $line) {
         if (count($results) >= $maxResults) break;
         $parts = explode("|", $line);
-        if (count($parts) >= 3 && mb_stripos($parts[2], $query) !== false) {
+        if (count($parts) >= 3 && mb_stripos(strip_arabic_diacritics($parts[2]), $queryClean) !== false) {
             $sura = intval($parts[0]);
             $aya = intval($parts[1]);
             $results[] = array(
@@ -154,11 +188,11 @@ function search_quran() {
         }
     }
 
-    // Remove duplicates (same sura:aya)
+    // Remove duplicates (same sura:aya:type)
     $unique = array();
     $seen = array();
     foreach ($results as $r) {
-        $key = $r['sura'] . ':' . $r['aya'];
+        $key = $r['sura'] . ':' . $r['aya'] . ':' . $r['type'];
         if (!isset($seen[$key])) {
             $seen[$key] = true;
             $unique[] = $r;

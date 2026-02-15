@@ -26,6 +26,9 @@ function showSura($sura) {
 
     $suraName = getSuraData($sura, 'name');
     $suraTname = getSuraData($sura, 'tname');
+    $totalAyas = getSuraData($sura, 'ayas');
+    $totalRukus = getSuraData($sura, 'rukus');
+    $suraParas = getSuraParas($sura);
     $suraText = getSuraContents($sura, $quranFile);
     $transText = getSuraContents($sura, $transFile);
     $transTextUrdu = getSuraContents($sura, $transFileUrdu);
@@ -48,8 +51,12 @@ function showSura($sura) {
 
     // Audio player
 
-    // Sura name header
-    $html .= "<div class='suraName'>سورة $suraName</div>";
+    // Sura name header with stats
+    $html .= "<div class='suraName'>";
+    $html .= "<span class='sura-stat sura-stat-left'>Ayat: $totalAyas</span>";
+    $html .= "<span class='sura-title'>سورة $suraName</span>";
+    $html .= "<span class='sura-stat sura-stat-right'>Ruku: $totalRukus | Para: $suraParas</span>";
+    $html .= "</div>";
 
     // Loop through verses
     foreach ($suraText as $aya) {
