@@ -362,22 +362,7 @@
 
     function highlightText(text, query) {
         if (!query) return text;
-        var escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\    function displaySearchResults(data) {
-        var html = "";
-        if (data.results && data.results.length > 0) {
-            html += "<div class='search-count'>Found " + data.count + " results</div>";
-            data.results.forEach(function(r) {
-                var textClass = r.type === "arabic" ? "arabic" : (r.type === "urdu" ? "urdu" : "");
-                html += "<div class='search-result-item' onclick='goToAya(" + r.sura + ", " + r.aya + ")'>";
-                html += "<div class='search-result-ref'>" + r.suraName + " " + r.sura + ":" + r.aya + " (" + r.type + ")</div>";
-                html += "<div class='search-result-text " + textClass + "'>" + r.text.substring(0, 150) + (r.text.length > 150 ? "..." : "") + "</div>";
-                html += "</div>";
-            });
-        } else {
-            html = "<div class='no-results'>No results found</div>";
-        }
-        $("#search-results").html(html).addClass("active");
-    }');
+        var escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         var regex = new RegExp('(' + escaped + ')', 'gi');
         return text.replace(regex, '<mark class="search-highlight">$1</mark>');
     }
@@ -637,7 +622,7 @@
         var highlightWord = urlParams.get("highlight");
         if (highlightWord) {
             setTimeout(function() {
-                var escaped = highlightWord.replace(/[.*+?^${}()|[\]\\]/g, '\\    // ============ IMAGE GENERATOR ============');
+                var escaped = highlightWord.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
                 var regex = new RegExp('(' + escaped + ')', 'gi');
                 $(".quran .ayaText, .englishtrans, .trans").each(function() {
                     var el = $(this);
