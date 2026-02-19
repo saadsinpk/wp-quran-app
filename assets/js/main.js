@@ -669,6 +669,7 @@
         var highlightWord = urlParams.get("highlight");
         if (highlightWord) {
             setTimeout(function() {
+                console.log('Highlighting word:', highlightWord);
                 var isArabic = /[\u0600-\u06FF]/.test(highlightWord);
                 var regex;
                 if (isArabic) {
@@ -700,7 +701,7 @@
                         el.html(html.replace(regex, '<mark class="search-highlight">$1</mark>'));
                     }
                 });
-            }, 600);
+            }, 1200);
         }
     })();
 
