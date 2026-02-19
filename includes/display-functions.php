@@ -190,16 +190,7 @@ function display_quran_func() {
             $html .= '<style>' . file_get_contents($cssFile) . '</style>';
         }
 
-        // Include jQuery and JS
-        $html .= '<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>';
-        $jsFile = QURAN_SIMPLE_PATH . 'assets/js/main.js';
-
-        // Pass variables to JS
-        $html .= '<script>var quranSimple = { ajaxurl: "' . admin_url('admin-ajax.php') . '", currentSura: ' . $sura . ' };</script>';
-
-        if (file_exists($jsFile)) {
-            $html .= '<script>' . file_get_contents($jsFile) . '</script>';
-        }
+        // JS is loaded via wp_enqueue_script in index.php (no duplicate inline loading)
 
         // Wrap everything in container for theming
         $html .= '<div class="quran-container">';
