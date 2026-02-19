@@ -694,7 +694,9 @@
                 $(".quran .ayaText, .englishtrans, .trans").each(function() {
                     var el = $(this);
                     var html = el.html();
+                    regex.lastIndex = 0;
                     if (regex.test(html)) {
+                        regex.lastIndex = 0;
                         el.html(html.replace(regex, '<mark class="search-highlight">$1</mark>'));
                     }
                 });
