@@ -773,84 +773,84 @@
         var ctx = canvas.getContext("2d");
         var t = templates[currentTemplate];
         var W = 800;
-        var maxW = W - 100; // text max width
+        var maxW = W - 100;
+        var yPadding = 60;
+        var sectionGap = 30;
+        var footerH = 80;
 
-        // First pass: measure heights to calculate dynamic canvas height
-        canvas.width = W;
-        canvas.height = 2000; // temp large canvas for measuring
-
-        ctx.font = " 36px Muhammadi, Arial";
         var arabicText = imageData.arabic || "";
-        var arabicLines = getWrappedLines(ctx, arabicText, maxW);
-
-        ctx.font = "italic 22px Calibri, Arial";
         var englishText = imageData.english || "";
-        var englishLines = getWrappedLines(ctx, englishText, maxW);
-
-        ctx.font = " 22px Jameel Noori Nastaleeq, Arial";
         var urduText = imageData.urdu || "";
-        var urduLines = getWrappedLines(ctx, urduText, maxW);
 
-        // Calculate dynamic height
-        var yPadding = 60; // top padding
-        var sectionGap = 30; // gap between sections
+        // Use an offscreen canvas for measuring to avoid reset issues
+        var offscreen = document.createElement("canvas");
+        offscreen.width = W;
+        offscreen.height = 1;
+        var mCtx = offscreen.getContext("2d");
+
+        mCtx.font = "36px Muhammadi, Arial";
+        var arabicLines = getWrappedLines(mCtx, arabicText, maxW);
+        mCtx.font = "italic 22px Calibri, Arial";
+        var englishLines = getWrappedLines(mCtx, englishText, maxW);
+        mCtx.font = "22px Jameel Noori Nastaleeq, Arial";
+        var urduLines = getWrappedLines(mCtx, urduText, maxW);
+
         var arabicH = arabicLines.length * 50;
         var englishH = englishLines.length * 32;
         var urduH = urduLines.length * 32;
-        var footerH = 80; // reference + line + website
 
         var totalH = yPadding + arabicH + sectionGap + englishH + sectionGap + urduH + sectionGap + footerH;
-        totalH = Math.max(totalH, 500); // minimum height
+        totalH = Math.max(totalH, 500);
 
-        // Second pass: actual drawing
+        // Set final canvas size
         canvas.width = W;
         canvas.height = totalH;
 
         // Draw gradient background
-        var gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+        var gradient = ctx.createLinearGradient(0, 0, W, totalH);
         gradient.addColorStop(0, t.bg1);
         gradient.addColorStop(1, t.bg2);
         ctx.fillStyle = gradient;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillRect(0, 0, W, totalH);
 
-        // Add decorative pattern
+        // Decorative pattern
         ctx.strokeStyle = "rgba(255,255,255,0.1)";
         ctx.lineWidth = 1;
         for (var i = 0; i < 20; i++) {
             ctx.beginPath();
-            ctx.arc(Math.random() * canvas.width, Math.random() * canvas.height, Math.random() * 100 + 50, 0, Math.PI * 2);
+            ctx.arc(Math.random() * W, Math.random() * totalH, Math.random() * 100 + 50, 0, Math.PI * 2);
             ctx.stroke();
         }
 
         var curY = yPadding;
 
-        // Draw Arabic text
+        // Arabic text
         ctx.fillStyle = t.text;
         ctx.textAlign = "center";
-        ctx.font = " 36px Muhammadi, Arial";
+        ctx.font = "36px Muhammadi, Arial";
         drawLines(ctx, arabicLines, W / 2, curY, 50);
         curY += arabicH + sectionGap;
 
-        // Draw English translation
+        // English translation
         ctx.font = "italic 22px Calibri, Arial";
         ctx.fillStyle = t.text;
         drawLines(ctx, englishLines, W / 2, curY, 32);
         curY += englishH + sectionGap;
 
-        // Draw Urdu translation
-        ctx.font = " 22px Jameel Noori Nastaleeq, Arial";
+        // Urdu translation
+        ctx.font = "22px Jameel Noori Nastaleeq, Arial";
         ctx.fillStyle = t.text;
         ctx.textAlign = "center";
         drawLines(ctx, urduLines, W / 2, curY, 32);
         curY += urduH + sectionGap;
 
-        // Draw reference
+        // Reference
         ctx.font = "bold 24px Calibri, Arial";
         ctx.fillStyle = t.text;
         ctx.fillText("- " + imageData.suraName + " " + imageData.sura + ":" + imageData.aya, W / 2, curY);
         curY += 30;
 
-        // Draw decorative line
+        // Decorative line
         ctx.strokeStyle = "rgba(255,255,255,0.5)";
         ctx.lineWidth = 2;
         ctx.beginPath();
@@ -859,7 +859,7 @@
         ctx.stroke();
         curY += 20;
 
-        // Draw website
+        // Website
         ctx.font = "14px Calibri, Arial";
         ctx.fillStyle = "rgba(255,255,255,0.7)";
         ctx.fillText("Al-Quran Simple  -  Alahazrat.net", W / 2, curY);
