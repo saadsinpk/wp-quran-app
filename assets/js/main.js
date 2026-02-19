@@ -344,7 +344,6 @@
     function searchQuran() {
         var query = $("#quran-search").val().trim();
         if (query.length < 2) {
-            alert("Please enter at least 2 characters to search");
             return;
         }
 
@@ -361,7 +360,9 @@
         });
     }
 
-    function displaySearchResults(data) {
+    function highlightText(text, query) {
+        if (!query) return text;
+        var escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\    function displaySearchResults(data) {
         var html = "";
         if (data.results && data.results.length > 0) {
             html += "<div class='search-count'>Found " + data.count + " results</div>";
@@ -376,11 +377,37 @@
             html = "<div class='no-results'>No results found</div>";
         }
         $("#search-results").html(html).addClass("active");
+    }');
+        var regex = new RegExp('(' + escaped + ')', 'gi');
+        return text.replace(regex, '<mark class="search-highlight">$1</mark>');
     }
 
-    window.goToAya = function(sura, aya) {
+    function displaySearchResults(data) {
+        var query = $("#quran-search").val().trim();
+        var html = "";
+        if (data.results && data.results.length > 0) {
+            html += "<div class='search-count'>Found " + data.count + " results</div>";
+            data.results.forEach(function(r) {
+                var textClass = r.type === "arabic" ? "arabic" : (r.type === "urdu" ? "urdu" : "");
+                var displayText = r.text.substring(0, 150) + (r.text.length > 150 ? "..." : "");
+                displayText = highlightText(displayText, query);
+                html += "<div class='search-result-item' onclick='goToAya(" + r.sura + ", " + r.aya + ", \"" + encodeURIComponent(query) + "\")'>";
+                html += "<div class='search-result-ref'>" + r.suraName + " " + r.sura + ":" + r.aya + " (" + r.type + ")</div>";
+                html += "<div class='search-result-text " + textClass + "'>" + displayText + "</div>";
+                html += "</div>";
+            });
+        } else {
+            html = "<div class='no-results'>No results found</div>";
+        }
+        $("#search-results").html(html).addClass("active");
+    }
+
+    window.goToAya = function(sura, aya, highlight) {
         var url = new URL(window.location.href);
         url.searchParams.set("sura", sura);
+        if (highlight) {
+            url.searchParams.set("highlight", decodeURIComponent(highlight));
+        }
         url.hash = "aya-" + sura + "-" + aya;
         window.location.href = url.toString();
     };
@@ -393,6 +420,21 @@
         if (e.which === 13) {
             searchQuran();
         }
+    });
+
+    // Bug 2: Live search with debounce
+    var searchDebounceTimer;
+    $(document).on("input", "#quran-search", function() {
+        var query = $(this).val().trim();
+        clearTimeout(searchDebounceTimer);
+        if (query.length < 2) {
+            $("#search-results").removeClass("active").html("");
+            return;
+        }
+        $("#search-results").html("<div class='search-loading'>Searching...</div>").addClass("active");
+        searchDebounceTimer = setTimeout(function() {
+            searchQuran();
+        }, 300);
     });
 
     $(document).on("click", function(e) {
@@ -588,6 +630,25 @@
             }
         }, 500);
     }
+
+    // ============ Highlight from URL param ============
+    (function() {
+        var urlParams = new URLSearchParams(window.location.search);
+        var highlightWord = urlParams.get("highlight");
+        if (highlightWord) {
+            setTimeout(function() {
+                var escaped = highlightWord.replace(/[.*+?^${}()|[\]\\]/g, '\\    // ============ IMAGE GENERATOR ============');
+                var regex = new RegExp('(' + escaped + ')', 'gi');
+                $(".quran .ayaText, .englishtrans, .trans").each(function() {
+                    var el = $(this);
+                    var html = el.html();
+                    if (regex.test(html)) {
+                        el.html(html.replace(regex, '<mark class="search-highlight">$1</mark>'));
+                    }
+                });
+            }, 600);
+        }
+    })();
 
     // ============ IMAGE GENERATOR ============
     var imageData = {};
