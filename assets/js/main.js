@@ -667,45 +667,71 @@
     (function() {
         var urlParams = new URLSearchParams(window.location.search);
         var highlightWord = urlParams.get("highlight");
-        if (highlightWord) {
-            setTimeout(function() {
-                console.log('Highlighting word:', highlightWord);
-                var isArabic = /[\u0600-\u06FF]/.test(highlightWord);
-                var regex;
-                if (isArabic) {
-                    var pattern = '';
-                    for (var i = 0; i < highlightWord.length; i++) {
-                        var ch = highlightWord[i];
-                        if (ch === ' ') {
-                            pattern += '\\s+' + arabicDiacritics;
+        if (!highlightWord) return;
+
+        // Skip if already highlighted by a previous script load
+        if (document.querySelectorAll('.search-highlight').length > 0) return;
+
+        function buildHighlightRegex(word) {
+            var isArabicQuery = /[\u0600-\u06FF]/.test(word);
+            if (isArabicQuery) {
+                var pat = '';
+                for (var i = 0; i < word.length; i++) {
+                    var ch = word[i];
+                    if (ch === ' ') {
+                        pat += '\\s+' + arabicDiacritics;
+                    } else {
+                        var norm = normalizeArabicChar(ch);
+                        var esc = ch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                        if (norm !== ch) {
+                            var escNorm = norm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                            pat += '[' + esc + escNorm + ']' + arabicDiacritics;
                         } else {
-                            var normalized = normalizeArabicChar(ch);
-                            if (normalized !== ch) {
-                                pattern += '[' + ch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + normalized.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ']' + arabicDiacritics;
-                            } else {
-                                pattern += ch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + arabicDiacritics;
-                            }
+                            pat += esc + arabicDiacritics;
                         }
                     }
-                    regex = new RegExp('(' + pattern + ')', 'gi');
-                } else {
-                    var escaped = highlightWord.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-                    regex = new RegExp('(' + escaped + ')', 'gi');
                 }
-                $(".quran .ayaText, .englishtrans, .trans").each(function() {
-                    var el = $(this);
-                    var html = el.html();
-                    regex.lastIndex = 0;
-                    if (regex.test(html)) {
-                        regex.lastIndex = 0;
-                        el.html(html.replace(regex, '<mark class="search-highlight">$1</mark>'));
-                    }
-                });
-            }, 1200);
+                return new RegExp('(' + pat + ')', 'gi');
+            } else {
+                var escaped = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                return new RegExp('(' + escaped + ')', 'gi');
+            }
         }
+
+        function doHighlight() {
+            var regex = buildHighlightRegex(highlightWord);
+            var count = 0;
+            $(".quran .ayaText, .englishtrans, .trans").each(function() {
+                var el = $(this);
+                var html = el.html();
+                regex.lastIndex = 0;
+                if (regex.test(html)) {
+                    regex.lastIndex = 0;
+                    el.html(html.replace(regex, '<mark class="search-highlight">$1</mark>'));
+                    count++;
+                }
+            });
+            return count;
+        }
+
+        // Retry mechanism to handle race conditions with duplicate script loading
+        var attempts = 0;
+        var retryTimer = setInterval(function() {
+            attempts++;
+            if (document.querySelectorAll('.search-highlight').length > 0 || attempts >= 10) {
+                clearInterval(retryTimer);
+                return;
+            }
+            if (document.querySelectorAll('.englishtrans, .trans, .quran').length > 0) {
+                doHighlight();
+            }
+        }, 500);
+
+        // Also try after short delay
+        setTimeout(doHighlight, 800);
     })();
 
-    // ============ IMAGE GENERATOR ============
+        // ============ IMAGE GENERATOR ============
     var imageData = {};
     var currentTemplate = 1;
 
