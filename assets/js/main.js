@@ -360,11 +360,58 @@
         });
     }
 
+    // Arabic diacritics pattern (tashkeel) - matches zero or more diacritics between characters
+    var arabicDiacritics = '[\u064B-\u065F\u0610-\u061A\u0670\u06D6-\u06ED]*';
+
+    // Normalize Arabic/Urdu character variants for matching
+    function normalizeArabicChar(ch) {
+        var map = {
+            '\u06CC': '\u064A', // ی -> ي
+            '\u06D2': '\u064A', // ے -> ي
+            '\u06A9': '\u0643', // ک -> ك
+            '\u06C1': '\u0647', // ہ -> ه
+            '\u06C3': '\u0647', // ۃ -> ه
+            '\u0629': '\u0647', // ة -> ه
+            '\u0623': '\u0627', // أ -> ا
+            '\u0625': '\u0627', // إ -> ا
+            '\u0622': '\u0627', // آ -> ا
+            '\u0649': '\u064A'  // ى -> ي
+        };
+        return map[ch] || ch;
+    }
+
     function highlightText(text, query) {
         if (!query) return text;
-        var escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        var regex = new RegExp('(' + escaped + ')', 'gi');
-        return text.replace(regex, '<mark class="search-highlight">$1</mark>');
+
+        // Check if query contains Arabic/Urdu characters
+        var isArabic = /[\u0600-\u06FF]/.test(query);
+
+        if (isArabic) {
+            // Build regex that allows optional diacritics between each character
+            // and normalizes character variants
+            var pattern = '';
+            for (var i = 0; i < query.length; i++) {
+                var ch = query[i];
+                if (ch === ' ') {
+                    pattern += '\\s+' + arabicDiacritics;
+                } else {
+                    var normalized = normalizeArabicChar(ch);
+                    // Match either the original char or its normalized form, followed by optional diacritics
+                    if (normalized !== ch) {
+                        pattern += '[' + ch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + normalized.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ']' + arabicDiacritics;
+                    } else {
+                        pattern += ch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + arabicDiacritics;
+                    }
+                }
+            }
+            var regex = new RegExp('(' + pattern + ')', 'gi');
+            return text.replace(regex, '<mark class="search-highlight">$1</mark>');
+        } else {
+            // Latin/English - simple exact match
+            var escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            var regex = new RegExp('(' + escaped + ')', 'gi');
+            return text.replace(regex, '<mark class="search-highlight">$1</mark>');
+        }
     }
 
     function displaySearchResults(data) {
@@ -622,8 +669,28 @@
         var highlightWord = urlParams.get("highlight");
         if (highlightWord) {
             setTimeout(function() {
-                var escaped = highlightWord.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-                var regex = new RegExp('(' + escaped + ')', 'gi');
+                var isArabic = /[\u0600-\u06FF]/.test(highlightWord);
+                var regex;
+                if (isArabic) {
+                    var pattern = '';
+                    for (var i = 0; i < highlightWord.length; i++) {
+                        var ch = highlightWord[i];
+                        if (ch === ' ') {
+                            pattern += '\\s+' + arabicDiacritics;
+                        } else {
+                            var normalized = normalizeArabicChar(ch);
+                            if (normalized !== ch) {
+                                pattern += '[' + ch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + normalized.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ']' + arabicDiacritics;
+                            } else {
+                                pattern += ch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + arabicDiacritics;
+                            }
+                        }
+                    }
+                    regex = new RegExp('(' + pattern + ')', 'gi');
+                } else {
+                    var escaped = highlightWord.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                    regex = new RegExp('(' + escaped + ')', 'gi');
+                }
                 $(".quran .ayaText, .englishtrans, .trans").each(function() {
                     var el = $(this);
                     var html = el.html();
