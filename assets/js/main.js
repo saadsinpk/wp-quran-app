@@ -111,6 +111,8 @@
         }
     }
 
+    var isResuming = false;
+
     function resumeLastRead() {
         var lastRead = getLastRead();
         if (!lastRead) return;
@@ -126,9 +128,12 @@
             // Same surah — auto-scroll to last read ayah
             var target = $("#aya-" + currSura + "-" + lastRead.aya);
             if (target.length) {
+                isResuming = true;
                 setTimeout(function() {
-                    $("html, body").animate({ scrollTop: target.offset().top - 100 }, 400);
-                }, 300);
+                    var scrollTo = target.offset().top - 100;
+                    window.scrollTo({ top: scrollTo, behavior: "smooth" });
+                    setTimeout(function() { isResuming = false; }, 1000);
+                }, 500);
             }
         }
     }
@@ -147,8 +152,10 @@
     function trackScrollPosition() {
         var scrollTimer;
         $(window).on("scroll", function() {
+            if (isResuming) return;
             clearTimeout(scrollTimer);
             scrollTimer = setTimeout(function() {
+                if (isResuming) return;
                 var viewportTop = $(window).scrollTop() + 150;
                 $(".aya").each(function() {
                     var ayaTop = $(this).offset().top;
