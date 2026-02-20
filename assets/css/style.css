@@ -136,7 +136,8 @@
 
 .quran, .trans, .englishtrans {
     padding: 10px;
-    text-align: right;
+    text-align: justify;
+    text-align-last: right;
 }
 
 .ayaNum {
