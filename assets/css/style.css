@@ -136,8 +136,7 @@
 
 .quran, .trans, .englishtrans {
     padding: 10px;
-    text-align: justify;
-    text-align-last: right;
+    text-align: right;
 }
 
 .ayaNum {
@@ -1291,7 +1290,8 @@ input:checked + .toggle-slider:before {
 /* RTL wrapper only for verse content - doesn't affect navigation */
 .quran-container.arabic-only-mode .sura-content-wrapper {
     direction: rtl;
-    text-align: right;
+    text-align: justify;
+    text-align-last: right;
 }
 
 .quran-container.arabic-only-mode .aya {
