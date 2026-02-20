@@ -30,10 +30,12 @@
         initBookmarks();
 
         // Show last read banner / auto-scroll to last position
+        // Delay scroll tracking until resume is done to prevent overwriting saved position
         resumeLastRead();
-
-        // Track scroll for last read position
-        trackScrollPosition();
+        setTimeout(function() {
+            isResuming = false;
+            trackScrollPosition();
+        }, 2000);
 
         // Initialize challenge
         initChallenge();
@@ -111,7 +113,7 @@
         }
     }
 
-    var isResuming = false;
+    var isResuming = true; // Start as true to prevent early tracking
 
     function resumeLastRead() {
         var lastRead = getLastRead();
