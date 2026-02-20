@@ -29,11 +29,8 @@
         // Initialize bookmarks
         initBookmarks();
 
-        // Save current reading position
-        saveLastRead(currentSura, 1);
-
-        // Show last read banner if different surah
-        showLastReadBanner();
+        // Show last read banner / auto-scroll to last position
+        resumeLastRead();
 
         // Track scroll for last read position
         trackScrollPosition();
@@ -114,11 +111,25 @@
         }
     }
 
-    function showLastReadBanner() {
+    function resumeLastRead() {
         var lastRead = getLastRead();
-        if (lastRead && lastRead.sura !== currentSura) {
+        if (!lastRead) return;
+
+        var lastSura = String(lastRead.sura);
+        var currSura = String(currentSura);
+
+        if (lastSura !== currSura) {
+            // Different surah — show banner to go back
             $("#last-read-sura").text("Surah " + lastRead.sura + ", Ayah " + lastRead.aya);
             $("#last-read-banner").addClass("active");
+        } else if (lastRead.aya && Number(lastRead.aya) > 1) {
+            // Same surah — auto-scroll to last read ayah
+            var target = $("#aya-" + currSura + "-" + lastRead.aya);
+            if (target.length) {
+                setTimeout(function() {
+                    $("html, body").animate({ scrollTop: target.offset().top - 100 }, 400);
+                }, 300);
+            }
         }
     }
 
