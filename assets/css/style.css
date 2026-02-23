@@ -1423,6 +1423,34 @@ input:checked + .toggle-slider:before {
     }
 }
 
+/* ============ Play Surah Floating Button ============ */
+.play-surah-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--accent-color);
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9998;
+    transition: all 0.3s ease;
+}
+
+.play-surah-btn:hover {
+    background: var(--accent-dark);
+    transform: scale(1.1);
+}
+
+.play-surah-btn.playing {
+    display: none;
+}
+
 /* ============ Ayat Play Button ============ */
 .play-btn {
     cursor: pointer;

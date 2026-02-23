@@ -163,6 +163,10 @@ function showSura($sura) {
 		</div>
 		";
 
+		$html .= "<button class='play-surah-btn' id='play-surah-btn' onclick='playSurahFromStart()' title='Play Surah'>
+			<svg viewBox='0 0 24 24' width='28' height='28'><path d='M8 5v14l11-7z' fill='white'/></svg>
+		</button>";
+
 		$html .= "<div class='ayat-audio-player' id='ayat-audio-player' style='display:none;'>
 			<div class='ayat-player-info'>
 				<span class='ayat-player-label' id='ayat-player-label'>Surah " . $suraTname . "</span>

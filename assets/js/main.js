@@ -1248,6 +1248,12 @@
         return audioBaseUrl + padNum(sura, 3) + padNum(aya, 3) + ".mp3";
     }
 
+    window.playSurahFromStart = function() {
+        playAyat(parseInt(currentSura), 1);
+        // Hide the play surah button while playing
+        $("#play-surah-btn").addClass("playing");
+    };
+
     window.playAyat = function(sura, aya) {
         // If same ayat is playing, toggle pause
         if (currentPlayingSura == sura && currentPlayingAya == aya && ayatAudio && !ayatAudio.paused) {
@@ -1362,6 +1368,7 @@
         resetAllPlayButtons();
         $(".aya").removeClass("aya-playing");
         $("#ayat-audio-player").slideUp(200);
+        $("#play-surah-btn").removeClass("playing");
         currentPlayingSura = null;
         currentPlayingAya = null;
     };
