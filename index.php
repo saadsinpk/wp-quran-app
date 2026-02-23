@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('QURAN_SIMPLE_VERSION', '2.4.0');
+define('QURAN_SIMPLE_VERSION', '3.0.0');
 define('QURAN_SIMPLE_PATH', plugin_dir_path(__FILE__));
 define('QURAN_SIMPLE_URL', plugin_dir_url(__FILE__));
 

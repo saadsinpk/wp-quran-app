@@ -1224,4 +1224,174 @@
         if ($(e.target).is("#challenge-modal")) closeChallengeModal();
     });
 
+    // ============ Ayat-by-Ayat Audio Player ============
+    var ayatAudio = null;
+    var currentPlayingSura = null;
+    var currentPlayingAya = null;
+    var audioBaseUrl = "https://alahazrat.info/library/Al-Quran/Recitation/Alafasy/";
+
+    function padNum(n, len) {
+        return String(n).padStart(len, "0");
+    }
+
+    function getAyatAudioUrl(sura, aya) {
+        return audioBaseUrl + padNum(sura, 3) + padNum(aya, 3) + ".mp3";
+    }
+
+    window.playAyat = function(sura, aya) {
+        // If same ayat is playing, toggle pause
+        if (currentPlayingSura == sura && currentPlayingAya == aya && ayatAudio && !ayatAudio.paused) {
+            ayatAudio.pause();
+            updatePlayButtons(sura, aya, false);
+            updatePlayerUI(false);
+            return;
+        }
+
+        var audioEl = document.getElementById("ayat-audio");
+        if (!audioEl) return;
+        ayatAudio = audioEl;
+
+        // Reset all play buttons
+        resetAllPlayButtons();
+
+        // Set source and play
+        var url = getAyatAudioUrl(sura, aya);
+        ayatAudio.src = url;
+        ayatAudio.play();
+
+        currentPlayingSura = sura;
+        currentPlayingAya = aya;
+
+        // Update UI
+        updatePlayButtons(sura, aya, true);
+        showPlayer(sura, aya);
+        highlightAya(sura, aya);
+
+        // Update audio element data
+        ayatAudio.setAttribute("data-sura", sura);
+    };
+
+    function resetAllPlayButtons() {
+        $(".play-btn .play-icon").show();
+        $(".play-btn .pause-icon").hide();
+        $(".play-btn").removeClass("playing");
+    }
+
+    function updatePlayButtons(sura, aya, isPlaying) {
+        var btn = $(".play-btn[data-sura='" + sura + "'][data-aya='" + aya + "']");
+        if (isPlaying) {
+            btn.find(".play-icon").hide();
+            btn.find(".pause-icon").show();
+            btn.addClass("playing");
+        } else {
+            btn.find(".play-icon").show();
+            btn.find(".pause-icon").hide();
+            btn.removeClass("playing");
+        }
+    }
+
+    function showPlayer(sura, aya) {
+        var player = $("#ayat-audio-player");
+        var label = $("#ayat-player-label");
+        var suraName = $(".play-btn[data-sura='" + sura + "']").first().closest(".aya").find(".verse-data").data("sura-name") || "Surah " + sura;
+        label.text(suraName + " - Ayat " + aya);
+        player.slideDown(200);
+        updatePlayerUI(true);
+    }
+
+    function updatePlayerUI(isPlaying) {
+        if (isPlaying) {
+            $(".ap-play").hide();
+            $(".ap-pause").show();
+        } else {
+            $(".ap-play").show();
+            $(".ap-pause").hide();
+        }
+    }
+
+    function highlightAya(sura, aya) {
+        $(".aya").removeClass("aya-playing");
+        $("#aya-" + sura + "-" + aya).addClass("aya-playing");
+    }
+
+    window.ayatPlayerToggle = function() {
+        if (!ayatAudio) return;
+        if (ayatAudio.paused) {
+            ayatAudio.play();
+            updatePlayButtons(currentPlayingSura, currentPlayingAya, true);
+            updatePlayerUI(true);
+        } else {
+            ayatAudio.pause();
+            updatePlayButtons(currentPlayingSura, currentPlayingAya, false);
+            updatePlayerUI(false);
+        }
+    };
+
+    window.ayatPlayerNext = function() {
+        if (!currentPlayingSura) return;
+        var totalAyas = parseInt($("#ayat-audio").data("total-ayas")) || 286;
+        var nextAya = currentPlayingAya + 1;
+        if (nextAya > totalAyas) return; // End of surah
+        playAyat(currentPlayingSura, nextAya);
+        scrollToAya(currentPlayingSura, nextAya);
+    };
+
+    window.ayatPlayerPrev = function() {
+        if (!currentPlayingSura) return;
+        var prevAya = currentPlayingAya - 1;
+        if (prevAya < 1) return;
+        playAyat(currentPlayingSura, prevAya);
+        scrollToAya(currentPlayingSura, prevAya);
+    };
+
+    window.ayatPlayerClose = function() {
+        if (ayatAudio) {
+            ayatAudio.pause();
+            ayatAudio.src = "";
+        }
+        resetAllPlayButtons();
+        $(".aya").removeClass("aya-playing");
+        $("#ayat-audio-player").slideUp(200);
+        currentPlayingSura = null;
+        currentPlayingAya = null;
+    };
+
+    function scrollToAya(sura, aya) {
+        var target = $("#aya-" + sura + "-" + aya);
+        if (target.length) {
+            $("html, body").animate({ scrollTop: target.offset().top - 120 }, 300);
+        }
+    }
+
+    // Auto-play next ayat when current finishes
+    $(document).on("loadedmetadata timeupdate", "#ayat-audio", function() {
+        var audio = this;
+        var fill = document.getElementById("ayat-progress-fill");
+        if (fill && audio.duration) {
+            fill.style.width = (audio.currentTime / audio.duration * 100) + "%";
+        }
+    });
+
+    $(document).on("ended", "#ayat-audio", function() {
+        // Auto-play next ayat
+        var totalAyas = parseInt($(this).data("total-ayas")) || 286;
+        var nextAya = currentPlayingAya + 1;
+        if (nextAya <= totalAyas) {
+            playAyat(currentPlayingSura, nextAya);
+            scrollToAya(currentPlayingSura, nextAya);
+        } else {
+            // Surah finished
+            ayatPlayerClose();
+        }
+    });
+
+    // Click on progress bar to seek
+    $(document).on("click", "#ayat-progress-bar", function(e) {
+        if (!ayatAudio || !ayatAudio.duration) return;
+        var rect = this.getBoundingClientRect();
+        var x = e.clientX - rect.left;
+        var pct = x / rect.width;
+        ayatAudio.currentTime = pct * ayatAudio.duration;
+    });
+
 })(jQuery);
