@@ -8,6 +8,16 @@
 (function($) {
     'use strict';
 
+    // Safety check - ensure dependencies are available
+    if (typeof quranSimple === 'undefined') {
+        console.error('QuranSimple: quranSimple variable not found');
+        return;
+    }
+    if (typeof $ === 'undefined' || typeof $.fn === 'undefined') {
+        console.error('QuranSimple: jQuery not found');
+        return;
+    }
+
     // Get variables from WordPress
     var ajaxurl = quranSimple.ajaxurl;
     var currentSura = quranSimple.currentSura;
@@ -1394,4 +1404,4 @@
         ayatAudio.currentTime = pct * ayatAudio.duration;
     });
 
-})(jQuery);
+})(typeof jQuery !== 'undefined' ? jQuery : window.jQuery);
