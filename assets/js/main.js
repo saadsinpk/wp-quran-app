@@ -1313,6 +1313,8 @@
         label.text(suraName + " - Ayat " + aya);
         player.slideDown(200);
         updatePlayerUI(true);
+        // Move settings bar up above player
+        $(".settings-bar .settings-group").css("bottom", "65px");
     }
 
     function updatePlayerUI(isPlaying) {
@@ -1369,6 +1371,8 @@
         $(".aya").removeClass("aya-playing");
         $("#ayat-audio-player").slideUp(200);
         $("#play-surah-btn").removeClass("playing");
+        // Move settings bar back down
+        $(".settings-bar .settings-group").css("bottom", "18px");
         currentPlayingSura = null;
         currentPlayingAya = null;
     };
@@ -1381,24 +1385,27 @@
     }
 
     // Auto-play next ayat when current finishes
-    $(document).on("loadedmetadata timeupdate", "#ayat-audio", function() {
-        var audio = this;
-        var fill = document.getElementById("ayat-progress-fill");
-        if (fill && audio.duration) {
-            fill.style.width = (audio.currentTime / audio.duration * 100) + "%";
-        }
-    });
+    // Use direct event listeners (jQuery delegated events don't work well with audio)
+    $(document).ready(function() {
+        var audioEl = document.getElementById("ayat-audio");
+        if (audioEl) {
+            audioEl.addEventListener("timeupdate", function() {
+                var fill = document.getElementById("ayat-progress-fill");
+                if (fill && this.duration) {
+                    fill.style.width = (this.currentTime / this.duration * 100) + "%";
+                }
+            });
 
-    $(document).on("ended", "#ayat-audio", function() {
-        // Auto-play next ayat
-        var totalAyas = parseInt($(this).data("total-ayas")) || 286;
-        var nextAya = currentPlayingAya + 1;
-        if (nextAya <= totalAyas) {
-            playAyat(currentPlayingSura, nextAya);
-            scrollToAya(currentPlayingSura, nextAya);
-        } else {
-            // Surah finished
-            ayatPlayerClose();
+            audioEl.addEventListener("ended", function() {
+                var totalAyas = parseInt(this.dataset.totalAyas) || 286;
+                var nextAya = currentPlayingAya + 1;
+                if (nextAya <= totalAyas) {
+                    playAyat(currentPlayingSura, nextAya);
+                    scrollToAya(currentPlayingSura, nextAya);
+                } else {
+                    ayatPlayerClose();
+                }
+            });
         }
     });
 

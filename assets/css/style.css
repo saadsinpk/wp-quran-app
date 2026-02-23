@@ -279,8 +279,9 @@
     border-radius: 30px;
     box-shadow: 0 2px 8px var(--shadow-color);
 
-    z-index: 1001;
+    z-index: 10001;
     pointer-events: auto;
+    transition: bottom 0.3s ease;
 }
 
 .settings-bar .settings-group:last-child {
@@ -297,8 +298,9 @@
     border-radius: 30px;
     box-shadow: 0 2px 8px var(--shadow-color);
 
-    z-index: 1001;
+    z-index: 10001;
     pointer-events: auto;
+    transition: bottom 0.3s ease;
 }
 
 .settings-label {
@@ -1426,10 +1428,10 @@ input:checked + .toggle-slider:before {
 /* ============ Play Surah Floating Button ============ */
 .play-surah-btn {
     position: fixed;
-    bottom: 20px;
-    left: 20px;
-    width: 56px;
-    height: 56px;
+    bottom: 80px;
+    left: 15px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     background: var(--accent-color);
     border: none;
@@ -1438,7 +1440,7 @@ input:checked + .toggle-slider:before {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 9998;
+    z-index: 9990;
     transition: all 0.3s ease;
 }
 
