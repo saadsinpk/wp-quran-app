@@ -1279,7 +1279,7 @@ input:checked + .toggle-slider:before {
 .quran-container.arabic-only-mode .sura-content-wrapper {
     direction: rtl;
     text-align: justify;
-    padding-top: 15px;
+    padding-top: 25px;
 }
 
 .quran-container.arabic-only-mode .aya {
