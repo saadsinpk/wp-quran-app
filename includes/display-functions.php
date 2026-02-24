@@ -168,19 +168,16 @@ function showSura($sura) {
 		</button>";
 
 		$html .= "<div class='ayat-audio-player' id='ayat-audio-player' style='display:none;'>
-			<div class='ayat-player-info'>
-				<span class='ayat-player-label' id='ayat-player-label'>Surah " . $suraTname . "</span>
-			</div>
 			<div class='ayat-player-controls'>
 				<button class='ayat-ctrl-btn' onclick='ayatPlayerPrev()' title='Previous'>
-					<svg viewBox='0 0 24 24' width='20' height='20'><path d='M6 6h2v12H6zm3.5 6l8.5 6V6z'/></svg>
+					<svg viewBox='0 0 24 24' width='18' height='18'><path d='M6 6h2v12H6zm3.5 6l8.5 6V6z'/></svg>
 				</button>
 				<button class='ayat-ctrl-btn ayat-play-pause' onclick='ayatPlayerToggle()' title='Play/Pause'>
-					<svg class='ap-play' viewBox='0 0 24 24' width='24' height='24'><path d='M8 5v14l11-7z'/></svg>
-					<svg class='ap-pause' viewBox='0 0 24 24' width='24' height='24' style='display:none;'><path d='M6 19h4V5H6v14zm8-14v14h4V5h-4z'/></svg>
+					<svg class='ap-play' viewBox='0 0 24 24' width='22' height='22'><path d='M8 5v14l11-7z'/></svg>
+					<svg class='ap-pause' viewBox='0 0 24 24' width='22' height='22' style='display:none;'><path d='M6 19h4V5H6v14zm8-14v14h4V5h-4z'/></svg>
 				</button>
 				<button class='ayat-ctrl-btn' onclick='ayatPlayerNext()' title='Next'>
-					<svg viewBox='0 0 24 24' width='20' height='20'><path d='M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z'/></svg>
+					<svg viewBox='0 0 24 24' width='18' height='18'><path d='M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z'/></svg>
 				</button>
 			</div>
 			<div class='ayat-player-progress'>
@@ -188,8 +185,12 @@ function showSura($sura) {
 					<div class='ayat-progress-fill' id='ayat-progress-fill'></div>
 				</div>
 			</div>
+			<span class='ayat-player-time' id='ayat-player-time'>0:00</span>
+			<button class='ayat-ctrl-btn' onclick='toggleVolume()' id='volume-btn' title='Volume'>
+				<svg viewBox='0 0 24 24' width='18' height='18'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z'/></svg>
+			</button>
 			<button class='ayat-ctrl-btn ayat-close-btn' onclick='ayatPlayerClose()' title='Close'>
-				<svg viewBox='0 0 24 24' width='18' height='18'><path d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/></svg>
+				<svg viewBox='0 0 24 24' width='16' height='16'><path d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/></svg>
 			</button>
 			<audio id='ayat-audio' data-sura='" . $sura . "' data-total-ayas='" . $totalAyas . "'></audio>
 		</div>";

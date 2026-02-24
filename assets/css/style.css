@@ -1292,8 +1292,7 @@ input:checked + .toggle-slider:before {
 /* RTL wrapper only for verse content - doesn't affect navigation */
 .quran-container.arabic-only-mode .sura-content-wrapper {
     direction: rtl;
-    text-align: justify;
-    text-align-last: right;
+    text-align: center;
 }
 
 .quran-container.arabic-only-mode .aya {
@@ -1490,42 +1489,31 @@ input:checked + .toggle-slider:before {
     left: 0;
     right: 0;
     background: var(--bg-primary);
-    border-top: 2px solid var(--accent-color);
+    border-top: 1px solid var(--border-color);
     box-shadow: 0 -2px 10px var(--shadow-color);
-    padding: 8px 15px;
+    padding: 6px 10px;
     display: flex;
     align-items: center;
-    gap: 10px;
-    z-index: 9999;
-    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 8px;
+    z-index: 10000;
 }
 
 .ayat-player-info {
-    flex: 1;
-    min-width: 0;
-}
-
-.ayat-player-label {
-    font-size: 0.85rem;
-    color: var(--text-primary);
-    font-weight: 600;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: block;
+    display: none;
 }
 
 .ayat-player-controls {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 4px;
 }
 
 .ayat-ctrl-btn {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 5px;
+    padding: 4px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -1546,8 +1534,8 @@ input:checked + .toggle-slider:before {
 }
 
 .ayat-player-progress {
-    flex: 2;
-    min-width: 60px;
+    width: 100px;
+    max-width: 150px;
 }
 
 .ayat-progress-bar {
@@ -1567,26 +1555,17 @@ input:checked + .toggle-slider:before {
     transition: width 0.1s linear;
 }
 
+.ayat-player-time {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    min-width: 35px;
+    text-align: center;
+}
+
 .ayat-close-btn {
     opacity: 0.6;
 }
 
 .ayat-close-btn:hover {
     opacity: 1;
-}
-
-/* Mobile responsive */
-@media screen and (max-width: 768px) {
-    .ayat-audio-player {
-        padding: 6px 10px;
-        gap: 6px;
-    }
-    
-    .ayat-player-label {
-        font-size: 0.75rem;
-    }
-    
-    .ayat-player-progress {
-        flex: 1;
-    }
 }
