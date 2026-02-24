@@ -1317,6 +1317,7 @@ input:checked + .toggle-slider:before {
     display: inline;
     font-family: Muhammadi;
     color: var(--text-primary);
+    cursor: pointer;
 /* 	align-items: center; */
     direction: rtl;
 	white-space: normal;

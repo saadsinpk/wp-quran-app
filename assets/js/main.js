@@ -1417,6 +1417,17 @@
         }
     });
 
+    // Click on ayat text to play (especially useful in Arabic-only mode)
+    $(document).on("click", ".aya .quran", function() {
+        var aya = $(this).closest(".aya");
+        var verseData = aya.find(".verse-data");
+        var sura = verseData.data("sura") || parseInt(currentSura);
+        var ayaNum = verseData.data("aya");
+        if (sura && ayaNum) {
+            playAyat(sura, ayaNum);
+        }
+    });
+
     window.toggleVolume = function() {
         if (!ayatAudio) return;
         ayatAudio.muted = !ayatAudio.muted;
