@@ -47,6 +47,7 @@
     background: var(--bg-primary);
     color: var(--text-primary);
     transition: all 0.3s ease;
+    padding-bottom: 60px;
 }
 
 .suraName {
@@ -261,46 +262,31 @@
 
 /* ============ Settings Bar (Dark Mode, Font Size) ============ */
 .settings-bar {
-    position: static;          /* absolute + inset hata diya */
-    pointer-events: none;      /* clicks sirf children pe */
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 15px;
+    background: var(--bg-primary);
+    border-top: 1px solid var(--border-color);
+    box-shadow: 0 -2px 8px var(--shadow-color);
+    z-index: 10001;
+    pointer-events: auto;
 }
 
 .settings-bar .settings-group:first-child {
-    position: fixed;
-    bottom: 18px;
-    left: 30px;
-
     display: flex;
     align-items: center;
-    gap: 10px;
-
-    padding: 8px 16px;
-    background: var(--bg-secondary);
-    border-radius: 30px;
-    box-shadow: 0 2px 8px var(--shadow-color);
-
-    z-index: 10001;
-    pointer-events: auto;
-    transition: bottom 0.3s ease;
+    gap: 8px;
 }
 
 .settings-bar .settings-group:last-child {
-    position: fixed;
-    bottom: 18px;
-    right: 30px;
-
     display: flex;
     align-items: center;
-    gap: 10px;
-
-    padding: 8px 16px;
-    background: var(--bg-secondary);
-    border-radius: 30px;
-    box-shadow: 0 2px 8px var(--shadow-color);
-
-    z-index: 10001;
-    pointer-events: auto;
-    transition: bottom 0.3s ease;
+    gap: 8px;
 }
 
 .settings-label {
@@ -1428,27 +1414,23 @@ input:checked + .toggle-slider:before {
 
 /* ============ Play Surah Floating Button ============ */
 .play-surah-btn {
-    position: fixed;
-    bottom: 18px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 46px;
-    height: 46px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     background: var(--accent-color);
     border: none;
     cursor: pointer;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 10000;
     transition: all 0.3s ease;
+    flex-shrink: 0;
 }
 
 .play-surah-btn:hover {
     background: var(--accent-dark);
-    transform: translateX(-50%) scale(1.1);
+    transform: scale(1.1);
 }
 
 .play-surah-btn.playing {
@@ -1487,19 +1469,11 @@ input:checked + .toggle-slider:before {
 
 /* ============ Sticky Ayat Audio Player ============ */
 .ayat-audio-player {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: var(--bg-primary);
-    border-top: 1px solid var(--border-color);
-    box-shadow: 0 -2px 10px var(--shadow-color);
-    padding: 6px 10px;
-    display: flex;
+    display: none;
     align-items: center;
+    gap: 5px;
+    flex: 1;
     justify-content: center;
-    gap: 8px;
-    z-index: 10000;
 }
 
 .ayat-player-info {

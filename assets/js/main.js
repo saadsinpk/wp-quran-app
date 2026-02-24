@@ -1308,14 +1308,9 @@
     }
 
     function showPlayer(sura, aya) {
-        var player = $("#ayat-audio-player");
-        var label = $("#ayat-player-label");
-        var suraName = $(".play-btn[data-sura='" + sura + "']").first().closest(".aya").find(".verse-data").data("sura-name") || "Surah " + sura;
-        label.text(suraName + " - Ayat " + aya);
-        player.slideDown(200);
+        $("#play-surah-btn").hide();
+        $("#ayat-audio-player").css("display", "flex");
         updatePlayerUI(true);
-        // Move settings bar up above player
-        $(".settings-bar .settings-group").css("bottom", "65px");
     }
 
     function updatePlayerUI(isPlaying) {
@@ -1371,9 +1366,8 @@
         resetAllPlayButtons();
         $(".aya").removeClass("aya-playing");
         $("#ayat-audio-player").slideUp(200);
-        $("#play-surah-btn").removeClass("playing");
-        // Move settings bar back down
-        $(".settings-bar .settings-group").css("bottom", "18px");
+        $("#ayat-audio-player").css("display", "none");
+        $("#play-surah-btn").show();
         currentPlayingSura = null;
         currentPlayingAya = null;
     };
