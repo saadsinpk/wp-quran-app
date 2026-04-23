@@ -8,6 +8,14 @@
 /* ============ Amiri Font (fallback for Arabic marks) ============ */
 @import url('https://fonts.googleapis.com/css2?family=Amiri&display=swap');
 
+/* Force Amiri for Arabic marks that Al-Qalam-V1 renders as circles */
+@font-face {
+    font-family: 'AmiriMarks';
+    src: url('https://fonts.gstatic.com/s/amiri/v30/J7aRnpd8CGxBHqUsvrQw7g.woff2') format('woff2');
+    font-display: swap;
+    unicode-range: U+06D6-U+06ED;
+}
+
 /* ============ CSS Variables for Theming ============ */
 :root {
     --bg-primary: #ffffff;
@@ -54,7 +62,7 @@
 }
 
 .suraName {
-    font-family: Al-Qalam-V1, Amiri;
+    font-family: AmiriMarks, Al-Qalam-V1, Amiri;
     text-align: center;
     font-size: 28px;
     padding: 10px 15px;
@@ -107,7 +115,7 @@
 }
 
 .quran {
-    font-family: Al-Qalam-V1, Amiri;
+    font-family: AmiriMarks, Al-Qalam-V1, Amiri;
     font-size: 2rem;
     direction: rtl;
     color: var(--text-primary);
@@ -728,7 +736,7 @@ input:checked + .toggle-slider:before {
 }
 
 .search-result-text.arabic {
-    font-family: Al-Qalam-V1, Amiri;
+    font-family: AmiriMarks, Al-Qalam-V1, Amiri;
     direction: rtl;
     text-align: right;
 }
@@ -1305,7 +1313,7 @@ input:checked + .toggle-slider:before {
     padding: 0 5px;
     background: transparent;
     display: inline;
-    font-family: Al-Qalam-V1, Amiri;
+    font-family: AmiriMarks, Al-Qalam-V1, Amiri;
     color: var(--text-primary);
     cursor: pointer;
 /* 	align-items: center; */
@@ -1322,7 +1330,7 @@ input:checked + .toggle-slider:before {
     padding: 20px;
     background: var(--bg-aya);
     border: 1px solid var(--border-color);
-    font-family: Al-Qalam-V1, Amiri;
+    font-family: AmiriMarks, Al-Qalam-V1, Amiri;
     font-size: 2rem;
     text-justify: inter-word;
     word-spacing: 2px;
