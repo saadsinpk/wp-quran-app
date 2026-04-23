@@ -79,6 +79,12 @@ function showSura($sura) {
             $aya = preg_replace('/^(([^ ]+ ){4})/u', '', $aya);
         }
 
+        // Remove combining marks that Al-Qalam-V1 renders as circles
+        $aya = preg_replace('/[\x{06DF}-\x{06E8}\x{06EA}\x{06EB}\x{06ED}]/u', '', $aya);
+
+        // Remove waqf marks within words (not preceded by space)
+        $aya = preg_replace('/(?<=\S)([\x{06D6}-\x{06DC}])/u', '', $aya);
+
         // Display waqf marks in different style
         $aya = preg_replace('/ ([ۖ-۩])/u', '<span class="sign">&nbsp;$1</span>', $aya);
 
