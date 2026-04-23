@@ -211,10 +211,13 @@ function display_quran_func() {
 
         $html = '';
 
-        // Include CSS inline
+        // Include CSS inline (fix relative font URLs for inline <style>)
         $cssFile = QURAN_SIMPLE_PATH . 'assets/css/style.css';
         if (file_exists($cssFile)) {
-            $html .= '<style>' . file_get_contents($cssFile) . '</style>';
+            $cssContent = file_get_contents($cssFile);
+            $pluginUrl = plugin_dir_url(dirname(__FILE__));
+            $cssContent = str_replace("url('../fonts/", "url('" . $pluginUrl . "assets/fonts/", $cssContent);
+            $html .= '<style>' . $cssContent . '</style>';
         }
 
         // JS is loaded via wp_enqueue_script in index.php (no duplicate inline loading)
