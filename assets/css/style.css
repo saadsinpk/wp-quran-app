@@ -197,10 +197,9 @@
 }
 
 .sign {
-    font-family: times new roman;
-    font-size: 0.9em;
     color: #FB7600;
-    letter-spacing: 5px;
+    vertical-align: middle;
+    font-size: 55%;
 }
 
 .loadingdiv {
