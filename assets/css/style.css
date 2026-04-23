@@ -8,6 +8,14 @@
 /* ============ Amiri Font (fallback for Arabic marks) ============ */
 @import url('https://fonts.googleapis.com/css2?family=Amiri&display=swap');
 
+/* ============ Modified Al-Qalam font (jazm circle fix) ============ */
+/* U+06E1 glyph removed from cmap so browser falls back to Amiri's proper head-of-khah shape */
+@font-face {
+    font-family: 'AlQalamFixed';
+    src: url('../fonts/AlQalamQuranMajeedWeb_v1.otf') format('opentype');
+    font-display: swap;
+}
+
 /* ============ CSS Variables for Theming ============ */
 :root {
     --bg-primary: #ffffff;
@@ -54,7 +62,7 @@
 }
 
 .suraName {
-    font-family: Al-Qalam-V1, Amiri;
+    font-family: AlQalamFixed, Amiri;
     text-align: center;
     font-size: 28px;
     padding: 10px 15px;
@@ -107,7 +115,7 @@
 }
 
 .quran {
-    font-family: Al-Qalam-V1, Amiri;
+    font-family: AlQalamFixed, Amiri;
     font-size: 2rem;
     direction: rtl;
     color: var(--text-primary);
@@ -727,7 +735,7 @@ input:checked + .toggle-slider:before {
 }
 
 .search-result-text.arabic {
-    font-family: Al-Qalam-V1, Amiri;
+    font-family: AlQalamFixed, Amiri;
     direction: rtl;
     text-align: right;
 }
@@ -1304,7 +1312,7 @@ input:checked + .toggle-slider:before {
     padding: 0 5px;
     background: transparent;
     display: inline;
-    font-family: Al-Qalam-V1, Amiri;
+    font-family: AlQalamFixed, Amiri;
     color: var(--text-primary);
     cursor: pointer;
 /* 	align-items: center; */
@@ -1321,7 +1329,7 @@ input:checked + .toggle-slider:before {
     padding: 20px;
     background: var(--bg-aya);
     border: 1px solid var(--border-color);
-    font-family: Al-Qalam-V1, Amiri;
+    font-family: AlQalamFixed, Amiri;
     font-size: 2rem;
     text-justify: inter-word;
     word-spacing: 2px;

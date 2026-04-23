@@ -818,7 +818,7 @@
         offscreen.height = 1;
         var mCtx = offscreen.getContext("2d");
 
-        mCtx.font = "36px Al-Qalam-V1, Amiri, Arial";
+        mCtx.font = "36px AlQalamFixed, Amiri, Arial";
         var arabicLines = getWrappedLines(mCtx, arabicText, maxW);
         mCtx.font = "italic 22px Calibri, Arial";
         var englishLines = getWrappedLines(mCtx, englishText, maxW);
@@ -857,7 +857,7 @@
         // Arabic text
         ctx.fillStyle = t.text;
         ctx.textAlign = "center";
-        ctx.font = "36px Al-Qalam-V1, Amiri, Arial";
+        ctx.font = "36px AlQalamFixed, Amiri, Arial";
         drawLines(ctx, arabicLines, W / 2, curY, 50);
         curY += arabicH + sectionGap;
 
